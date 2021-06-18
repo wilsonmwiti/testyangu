@@ -1,0 +1,168 @@
+{% extends 'base.html'%}
+{% block title%}
+Contact-ElimuSmart
+{% endblock %}
+{% block main%}
+{% for info in information%}
+    <!-- Start Subheader -->
+    <div class="normal-bg subheader" style="background-image: url('{{info.bg_image.url}}');">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="subheader-content">
+                        <h1 class="page-title text-custom-white fw-600">Get In Touch</h1>
+                        <ul class="custom-flex breadcrumb">
+                            <li><a  href="{% url 'index' %}">Home</a></li>
+                            <li>Contact</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Subheader -->
+    <!-- Start contact form -->
+    <div class="section-padding-top">
+        <div class="container">
+            <div class="col-12">
+                <div class="contact-form">
+                    <form action="{%url 'contact' %}" method="post">
+                    {% csrf_token %}
+                    {% if form.non_field_errors%}       
+                    <div class="alert alert-danger" role="alert">
+                        {{ form.non_field_errors }}
+                    </div>  
+                    {% endif %}
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group group-form">
+                                    {% if form.name.errors%}       
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form.name.errors }}
+                                    </div>  
+                                    {% endif %}
+                                    {{form.name}}
+                                    <span class="icon">
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group group-form">
+                                    {% if form.email.errors%}       
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form.email.errors }}
+                                    </div>  
+                                    {% endif %}
+                                    {{form.email}}
+                                    <span class="icon">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group group-form">
+                                    {% if form.phone.errors%}       
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form.phone.errors }}
+                                    </div>  
+                                    {% endif %}
+                                    {{form.phone}}
+                                    <span class="icon">
+                                        <i class="fa fa-phone"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group group-form">
+                                    {% if form.subject.errors%}       
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form.subject.errors }}
+                                    </div>  
+                                    {% endif %}
+                                    {{form.subject}}
+                                    <span class="icon">
+                                        <i class="fa fa-book"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group group-form">
+                                    {% if form.message.errors%}       
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form.message.errors }}
+                                    </div>  
+                                    {% endif %}
+                                    {{form.message}}
+                                    <span class="icon">
+                                        <i class="fa fa-pencil"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center">
+                                   {{form.captcha}}&emsp;<button type="submit" class="theme-btn btn-orange">Get a Free Consultacy</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End contact form -->
+    <!-- Start Map -->
+    <div class="contact-map">
+        <iframe title="contact map" class="image-fit" src="{{info.map_location}}"></iframe>
+    </div>
+    <!-- Start Map -->
+    <!-- Start contact detail -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-heading">
+                    <h6 class="text-orange mb-xl-10 sub-heading"><span>Contact</span></h6>
+                    <h3 class="text-blue fw-700 title">Catch us here also<span class="text-orange">.</span></h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="contact-info-box mb-md-30">
+                        <div class="icon text-orange">
+                            <i class="fa fa-map"></i>
+                        </div>
+                        <h3 class="fw-600">Office Address</h3>
+                        <a href="#" class="fw-500 fs-16">{{info.office_address}}</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="contact-info-box mb-md-30">
+                        <div class="icon text-orange">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <h3 class="fw-600">Phone Number</h3>
+                        <a href="tel:" class="fw-500 fs-16">{{info.primary_phone}}</a><br/>
+                        <a href="tel:" class="fw-500 fs-16">{{info.secondary_phone}}</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="contact-info-box">
+                        <div class="icon text-orange">
+                            <i class="fa fa-globe"></i>
+                        </div>
+                        <h3 class="fw-600">Web Connect</h3>
+                        <a href="mailto:" class="fw-500 fs-16">{{info.email}}</a>
+                        <a href="#" class="fw-500 fs-16">{{info.website}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endfor %}    
+    <!-- End contact detail -->
+{% endblock %}

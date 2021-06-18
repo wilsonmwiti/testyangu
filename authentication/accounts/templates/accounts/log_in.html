@@ -1,0 +1,152 @@
+{% extends 'accounts/layouts/base.html'%}
+{%block title%}
+log-in
+{% endblock title %}
+{%block content%}
+<!-- Wrapper Area -->
+<div class="wrapper__area" id="wrapper_Area">
+    <!-- Forms Area -->
+    <div class="forms__area">
+    <!-- Login Form -->
+    <form class="login__form" action="{% url "accounts:log_in"%}" method="POST" id="loginForm1">
+        {% csrf_token %}
+            {% if form.non_field_errors%}       
+            <div class="alert alert-danger" role="alert">
+            {{ form.non_field_errors }}
+             </div>  
+            {% endif %}
+      <h1 class="form__title">Sign In!</h1>
+      <!-- inputs Groups -->
+      <div class="input__group">
+        {% if form.email.errors%}       
+        <div class="alert alert-danger" role="alert">
+            {{ form.email.errors }}
+        </div>  
+        {% endif %}
+        <label class="field">
+          {{form.email}}
+          {% comment %} <input type="email" name="username" placeholder="Email" id="loginEmail" required> {% endcomment %}
+        </label>
+        <span class="input__icon"><i class="bx bx-user"></i></span>
+        <small class="input__error_message"></small>
+      </div>
+      <div class="input__group">
+        {% if form.password.errors%}       
+        <div class="alert alert-danger" role="alert">
+            {{ form.password.errors }}
+        </div>  
+        {% endif %}
+        <label class="field">
+          {{form.password}}
+        </label>
+        <span class="input__icon"><i class="bx bx-lock"></i></span>
+        <span class="showHide__Icon"><i class="bx bx-hide"></i></span>
+        <small class="input__error_message"></small>
+      </div>
+      <div class="form__actions">
+        <label for="checkboxInput" class="remeber_me">
+          {{form.remember_me}}
+          <span class="checkmark"></span>
+          <span>Remeber Me</span>
+        </label>
+        <div class="forgot_password"><a href="{% url 'accounts:restore_password'%}">Forgot Password?</a></div>
+      </div>
+      <!-- Login Button -->
+      <button type="submit" class="submit-button">Sign in</button>
+      <!-- Alternate Login -->
+      <div class="alternate-login">
+        <div class="link">
+          <i class='bx bxl-google'></i>
+          <span>Google</span>
+        </div>
+        <div class="link">
+          <i class='bx bxl-facebook-circle'></i>
+          <span>Facebook</span>
+        </div>
+      </div>
+    </form> <!-- End Login Form -->
+<!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <!-- Sign Up Form -->
+    <form class="sign-up__form" action="{%url "accounts:sign_up"%}" method="POST" id="signUpForm">
+        {% csrf_token %}
+      <!-- Form Title -->
+      <h1 class="form__title">Sign Up!</h1>
+      <!-- inputs Groups -->
+      <div class="input__group">
+        <label class="field">
+          <input type="text" name="first_name" placeholder="First name" id="">
+        </label>
+        <span class="input__icon"><i class="bx bx-at"></i></span>
+        <small class="input__error_message"></small>
+      </div>
+      <div class="input__group">
+        <label class="field">
+          <input type="text" name="last_name" placeholder="Last name" id="">
+        </label>
+        <span class="input__icon"><i class="bx bx-at"></i></span>
+        <small class="input__error_message"></small>
+      </div>
+      <div class="input__group">
+        <label class="field">
+          <input type="email" name="email" placeholder="Email@example.com" id="">
+        </label>
+        <span class="input__icon"><i class="bx bx-at"></i></span>
+        <small class="input__error_message"></small>
+      </div>
+       <div class="input__group">
+        <label class="field">
+          <input type="number" name="phone" placeholder="Phone number" id="">
+        </label>
+        <span class="input__icon"><i class="bx bx-at"></i></span>
+        <small class="input__error_message"></small>
+      </div>
+      <div class="input__group">
+        <label class="field">
+          <input type="password" name="password1" placeholder="Password123$#%&..." id="signUpPassword">
+        </label>
+        <span class="input__icon"><i class="bx bx-lock"></i></span>
+        <span class="showHide__Icon"><i class="bx bx-hide"></i></span>
+        <small class="input__error_message"></small>
+      </div>
+      <div class="input__group confirm__group">
+        <label class="field">
+          <input type="password" name="password2" placeholder="Confirm Password" id="signUpConfirmPassword">
+        </label>
+        <span class="input__icon"><i class="bx bx-lock"></i></span>
+        <span class="showHide__Icon"><i class="bx bx-hide"></i></span>
+        <small class="input__error_message"></small>
+      </div>
+      <!-- Sign Up Button -->
+      <button type="submit" class="submit-button" id="signUpSubmitBtn">Sign Up</button>
+      <!-- Alternate Login -->
+      <div class="alternate-login">
+        <div class="link">
+          <i class='bx bxl-google'></i>
+          <span>Google</span>
+        </div>
+        <div class="link">
+          <i class='bx bxl-facebook-circle'></i>
+          <span>Facebook</span>
+        </div>
+      </div>
+    </form> <!-- End Sign Up Form -->
+  </div><!-- End Forms Area -->
+
+  <!-- Aside Area -->
+  <div class="aside__area" id="aside_Area">
+    <div class="login__aside-info">
+      <h4>Hello</h4>
+      <img src="https://d.top4top.io/p_1945xjz2y1.png" alt="Image">
+      <p>Enter your personal details and start journey with us</p>
+       <a href="{%url "accounts:sign_up"%}"><button id="1aside_signUp_Btn">Sign Up</button></a>
+    </div>
+    <div class="sign-up__aside-info">
+      <h4>Welcome</h4>
+      <img src="https://e.top4top.io/p_1945sidbp2.png" alt="Image">
+      <p>To Keep connected with us please login with your personal info</p>
+      <a href="{%url "accounts:sign_up"%}"><button id="1aside_signIn_Btn">Sign In</button></a>
+    </div>
+  </div>
+</div>
+
+{% endblock content%}

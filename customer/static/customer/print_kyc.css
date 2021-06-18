@@ -1,0 +1,30 @@
+
+@media print{   
+    
+    @page { 
+    } 
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+    *{
+        font-size:12px;
+    }
+  
+}
+@media screen{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+
+}
+@page {
+    size:A3 landscape;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    margin: 0;
+    
+}

@@ -1,0 +1,16 @@
+.introduction{
+    padding-top:10%;
+    padding-left:5%;
+    font-size:30px;
+    font-weight:1000 ;
+}
+.introduction ul li {
+    list-style-type: square;
+    color:rgb(36, 19, 19);
+  }
+.quote{
+    padding-bottom:5%;
+}  
+.quote img{
+    min-height:600px;
+}

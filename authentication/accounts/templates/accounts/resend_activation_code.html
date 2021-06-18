@@ -1,0 +1,22 @@
+{% extends 'layouts/default/page.html' %}
+{% block content %}
+
+    <h4>{% trans 'Resend an activation code' %}</h4>
+
+    <form method="post">
+
+        {% csrf_token %}
+            {{form}}
+        <button class="btn btn-primary">Next</button>
+
+    </form>
+
+    <hr>
+
+    <ul>
+        <li>
+            <a href="{% url 'accounts:log_in' %}">Log in</a>
+        </li>
+    </ul>
+
+{% endblock %}

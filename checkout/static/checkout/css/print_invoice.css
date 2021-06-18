@@ -1,0 +1,20 @@
+@media print{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+    .to{
+        margin-left:40%;
+        margin-top:-40%;
+    }
+    .invoice-total h1{
+        font-size: 20px;
+    }
+}
+@media screen{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+
+}

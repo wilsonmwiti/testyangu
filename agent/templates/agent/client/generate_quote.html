@@ -1,0 +1,32 @@
+{% extends "customer/customer.html"%}
+{% load crispy_forms_tags %}  
+{% load static %}
+
+{% block title%}Generate quote{% endblock %}
+
+{%block dashboard-title %}<h4>Generate Quote</h4>{% endblock%}
+{% block dashboard-content%}
+ <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <form method="post">
+            {% csrf_token %}
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-sm-12 col-xs-12">
+                        {{form.name|as_crispy_field}}
+                        {{form.email|as_crispy_field}}
+                        {{form.fees|as_crispy_field}}
+                        {{form.years|as_crispy_field}}
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-sm-12 col-xs-12">
+                        {{form.phone|as_crispy_field}}
+                        {{form.dob|as_crispy_field}}
+                        {{form.school_level|as_crispy_field}}
+                    </div>
+                </div>
+            <button class="btn btn-success btn-block" type="submit">Submit</button>
+            </form>   
+        </div>
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,272 @@
+{% extends 'base.html'%}
+{% load static %}
+{% load crispy_forms_tags %}  
+
+{% block title%}Profile{% endblock%}
+{% load account_tags %}
+{% block main%}
+{% get_account as account %}
+{% date as date %}
+  <link rel="stylesheet" href="{%static 'customer/css/vertical-layout-light/dash.css'%}">
+  <div class="main-dashboard container-scroller">
+    
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+      
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          {% if account.account_type == "Agent"%}
+            <a class="nav-link" href="{% url 'agent_referred_users'%}">
+               <button class="btn btn-lg btn-block btn-info ">Add User</button>
+            </a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'customer_account'%}">
+              <i class="fa fa-bars"></i>&nbsp;
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          {% if account.account_type == "Agent"%}
+          <li class="nav-item">
+            <a class="nav-link" href="">
+              <i class="fa fa-bullhorn"></i>&nbsp;
+              <span class="menu-title">Leads</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="">
+              <i class="fa fa-user-plus"></i>&nbsp;
+              <span class="menu-title">Referal Orders</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="">
+              <i class="fa fa-money-bill"></i>&nbsp;
+              <span class="menu-title">Commission</span>
+            </a>
+          </li>
+
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="">
+              <i class="fa fa-shield-alt"></i>&nbsp;
+              <span class="menu-title">Policies</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{%url 'orders' %}">
+              <i class="fa fa-shopping-cart"></i>&nbsp;
+              <span class="menu-title">My Orders</span>
+            </a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="">
+              <i class="fa fa-exchange-alt"></i>&nbsp;
+              <span class="menu-title">Claims</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="">
+              <i class="fa fa-history"></i>&nbsp;
+              <span class="menu-title">Payment History</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="">
+              <i class="fa fa-bell"></i>&nbsp;
+              <span class="menu-title">Upcoming expired policies</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="">
+              <i class="fa fa-clock"></i>&nbsp;
+              <span class="menu-title">Expired Policies</span>
+            </a>
+          </li>
+
+           <li class="nav-item">
+            <a class="nav-link" href="{% url 'docs-view'%}">
+              <i class="fa fa-file"></i>&nbsp;
+              <span class="menu-title">My Documents</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{%url 'accounts:change_profile'%}">
+              <i class="fa fa-user-alt"></i>&nbsp;
+              <span class="menu-title">Change Profile</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{%url 'accounts:change_password'%}">
+              <i class="fa fa-key"></i>&nbsp;
+              <span class="menu-title">Change Password</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-12 grid-margin">
+              <div class="row">
+                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                  {%block dashboard-title %}<h5 class="">Welcome {{ user.first_name }}</h5>
+                  <h6 class="font-weight-normal mb-0">We will be there when your children need us the most</h6>
+                  {% endblock %}
+                </div>
+                <div class="col-12 col-xl-4">
+                 <div class="justify-content-end d-flex">
+                  <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+                   <button class="btn btn-sm btn-light bg-white " type="button">
+                      Today {{date}}
+                    </button>
+                  </div>
+                 </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% block dashboard-content%}
+          <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card tale-bg">
+                <div class="card-people mt-auto">
+                      <h2>Name: <u>{{ user.get_full_name }}</u>.</h2>
+                      <h2>Email:{{user.email}}</h2>
+                      <h2>Date of Birth: {{account.}} </h2>
+                      <hr>
+                      <h3>Date Joined: {{user.date_joined}}</h3>
+                      <h3>Last Activity: {{user.last_login}}</h3>
+                      <h3>Phone Number: {{account.phone_number}}</h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 grid-margin transparent">
+              <div class="row">
+                <div class="col-md-6 mb-4 stretch-card transparent">
+                  <div class="card card-tale">
+                    <div class="card-body">
+                      <p class="mb-4">Number of orders</p>
+                      <p class="fs-30 mb-2">4006</p>
+                      <p>10.00% (30 days)</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-4 stretch-card transparent">
+                  <div class="card card-dark-blue">
+                    <div class="card-body">
+                      <p class="mb-4">Total Payments</p>
+                      <p class="fs-30 mb-2">61344</p>
+                      <p>22.00% (30 days)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                  <div class="card card-light-blue">
+                    <div class="card-body">
+                      <p class="mb-4">Number of Meetings</p>
+                      <p class="fs-30 mb-2">34040</p>
+                      <p>2.00% (30 days)</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 stretch-card transparent">
+                  <div class="card card-light-danger">
+                    <div class="card-body">
+                      <p class="mb-4">Number of Clients</p>
+                      <p class="fs-30 mb-2">47033</p>
+                      <p>0.22% (30 days)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <!-- partial -->
+    
+        {% if account.account_type == "Agent"%}
+
+        {% if agent_data %}
+         <div class="row">
+         <hr>
+            <h1>Identity Information </h1>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                  <input type="text" value={{agent_data.link}} id="agent-code" >
+                  <div class="tooltip">
+                    <button onclick="myFunction()" onmouseout="outFunc()">
+                      <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+                      Copy text
+                      </button>
+                  </div>
+                  <img src="{{agent_data.profile.url}}" />
+                  <img src="{{agent_data.id_front.url}}" />
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                  <button class="btn btn-info btn-block" onclick="copy()">Copy url</button>
+                  <img src="{{agent_data.ira.url}}" />
+                  <img src="{{agent_data.id_back.url}}" />
+              </div>
+          </div>
+        {% else%}
+        <hr>
+        <form method="post">
+        {% csrf_token %}
+          <div class="row">
+            <h1>Please add the information below</h1>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                  {{form.id_front|as_crispy_field}}
+                  {{form.id_back|as_crispy_field}}
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                  {{form.ira|as_crispy_field}}
+                  {{form.profile|as_crispy_field}}
+              </div>
+              <button class="btn btn-success btn-block">Submit</button>
+          </div>
+        </form>  
+        {% endif %}
+        {% endif %}
+        {% endblock %}
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+</div>
+  <!-- container-scroller -->
+{% comment %}  {% endcomment %}
+
+  <!-- plugins:js -->
+  {% comment %} <script src="{%static 'customer/vendors/js/vendor.bundle.base.js'%}"></script> {% endcomment %}
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  {% comment %} <script src="{%static 'customer/vendors/chart.js/Chart.min.js'%}"></script> {% endcomment %}
+  {% comment %} <script src="{%static 'customer/vendors/datatables.net/jquery.dataTables.js'%}"></script> {% endcomment %}
+  {% comment %} <script src="{%static 'customer/vendors/datatables.net-bs4/dataTables.bootstrap4.js'%}"></script> {% endcomment %}
+  {% comment %} <script src="{% static 'customer/js/dataTables.select.min.js'%}"></script> {% endcomment %}
+
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  {% comment %} <script src="{% static 'customer/js/off-canvas.js'%}"></script> {% endcomment %}
+  <script src="{% static 'customer/js/hoverable-collapse.js'%}"></script>
+  {% comment %} <script src="{% static 'customer/js/template.js'%}"></script> {% endcomment %}
+  {% comment %} <script src="{% static 'customer/js/settings.js'%}"></script> {% endcomment %}
+  {% comment %} <script src="{% static 'customer/js/todolist.js'%}"></script> {% endcomment %}
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  {% comment %} <script src="{% static 'customer/js/dashboard.js'%}"></script> {% endcomment %}
+  {% comment %} <script src="{% static 'customer/js/Chart.roundedBarCharts.js'%}"></script> {% endcomment %}
+  <!-- End custom js for this page-->
+{% endblock %}
+

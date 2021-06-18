@@ -1,0 +1,258 @@
+<!-- At the top -->
+{% load static %}
+{% load hijack_tags %}
+{% load baseinformation_tags %}
+{% base_info as base %}
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    {% block SEO%}
+    {% endblock%}
+    <title>Elimusmart|{% block title%}{% endblock title%}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}" />
+    {% for data in base%}
+    <link rel="shortcut icon" href="{{data.icon.url}}">
+    {% endfor %}
+    <!-- Plugin -->
+    <link href="{%static 'website/css/plugin.css'%}" rel="stylesheet">
+    <!-- Custom Stylesheet -->
+    <link href="{%static 'website/css/style.css'%}" rel="stylesheet">
+    <link href="{%static 'partials/css/login_register_modal.css'%}" rel="stylesheet">
+    <!-- Custom Responsive -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <link href="{%static 'website/css/responsive.css'%}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <!-- place -->
+</head>  
+<body>  
+{% hijack_notification %}
+  <!-- Start Header -->
+    <header class="header no-print">
+        <!-- middle sec -->
+        <div class="middle-head">
+            <div class="container">
+                <div class="row align-items-center">
+                    {% for data in base %}
+                    <div class="col-lg-3 col-6">
+                        <div class="logo">
+                            <a href="{% url 'index'%}">
+                                <img src="{{data.logo.url}}" class="image-fit" alt="elimusmart">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-6">
+                        <div class="right-side">
+                            <ul class="custom-flex">
+                                <li>
+                                    <a href="#" class="text-blue">
+                                        <i class="fa fa-envelope"></i>
+                                        {{data.email}}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="text-blue">
+                                        <i class="fa fa-phone"></i>
+                                        {{data.phone_number}}
+                                    </a>
+                                </li>
+                            </ul>
+                            <a href="{% url 'lead'%}" class="theme-btn btn-orange">Get A Quote <i class="fa fa-plus"></i></a>
+                        </div>
+                        <div class="hamburger-btn">
+                            <div class="menu-btn">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- navigation -->
+        <div class="navigation">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="main-nav">
+                            <nav>
+                                <ul class="custom-flex main-menu">
+                                    <li class="menu-item">
+                                        <a href="{% url 'index' %}">Home</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="{% url 'about' %}">About</a>
+                                    </li>
+                               
+                                    <li class="menu-item">
+                                        <a href="{% url 'blog:post_list' %}">Blog</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="{% url 'contact' %}">Contact</a>
+                                    </li> 
+                                    <li class="menu-item">
+                                        {% if user.is_authenticated %}
+                                        <a href="{% url 'customer_account'%}"><i class="fa fa-user" aria-hidden="true"></i>{{ user.get_full_name }}</a>
+                                        {% else %}
+                                        <a href="{% url 'accounts:log_in'%}"  ><i class="fa fa-sign-in-alt" aria-hidden="true"></i>Login</a>
+                                        {% endif %}
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header> 
+    <!-- End Header -->
+{% block main %}
+{% endblock %}
+	<!-- Start Footer -->
+    <footer class="section-padding bg-blue footer no-print">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-3">
+                    <div class="ft-logo mb-lg-80">
+                    {% for data in base %}
+                        <img src="{{data.logo.url}}" class="image-fit" alt="elimusmart">
+                    {% endfor %}
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-3 col-sm-6">
+                    <div class="footer-widgets mb-sm-80">
+                        <h5 class="text-custom-white fw-600">About Us<span class="text-orange">.</span></h5>
+                        <ul class="custom">
+                            <li>
+                                <a href="#">Careers</a>
+                            </li>
+                            <li>
+                                <a href="#">About Us</a>
+                            </li>
+                            <li>
+                                <a href="#">Insights</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-4 col-sm-8">
+                    <div class="footer-widgets mb-xs-80">
+                        <h5 class="text-custom-white fw-600">Resources<span class="text-orange">.</span></h5>
+                        <ul class="custom">
+                            <li>
+                                <a href="#">PDF Docs</a>
+                            </li>
+                            <li>
+                                <a href="#">Support</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6">
+                    <div class="footer-widgets newsletter">
+                        <h5 class="text-custom-white fw-600">Subscribe Now<span class="text-orange">.</span></h5>
+                        <div class="input-group mb-xl-20">
+                            <form enctype="multipart/form-data" method="post" action="/newsletter/webuser/subscribe/">
+                                {% csrf_token %}
+                                <input type="email" name="email_field" required="" id="id_email_field"  class="form-control form-control-custom" placeholder="Email address">
+                                <button id="id_submit" name="submit" value="Subscribe" type="submit"></button>
+                                <div class="input-group-append">
+                                    <button>
+                                        <i class="fa fa-envelope"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        {% for data in base%}
+                        <img  class='no-print' src="{{data.footer_advert.url}}" class="image-fit" alt="">
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="copyright no-print">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-4 col-md-6">
+                    <ul class="custom-flex ft-menu">
+                        <li>
+                            <a href="#" class="text-custom-white">Platform</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <p class="text-custom-white fw-500">Copyright By @ <a href="https://bismart.co.ke" class="text-custom-white">Bismart</a></p>
+                </div>
+                <div class="col-lg-4">
+                    <ul class="custom-flex ft-social">
+                        {% for data in base %}
+                        <li>
+                            <a href="{{data.facebook}}" class="text-custom-white">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{data.twitter}}" class="text-custom-white">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{data.linkedin}}" class="text-custom-white">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{data.youtube}}" class="text-custom-white">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--Modals-->
+{% include 'partials/login_register_modal.html'%}
+<!--End modals-->
+    {% block back_top%}
+    <div id="back-top" class="back-top">
+        <a href="#top"><i class="fa fa-long-arrow-up"></i></a>
+    </div>
+    {% endblock %}
+    <!-- End Footer -->
+    <!-- Place all Scripts Here -->
+    <!-- jQuery -->
+    <script src="{%static 'website/js/jquery.min.js'%}"></script>
+    <!-- Popper -->
+    <script src="{%static 'website/js/popper.min.js'%}"></script>
+    <!-- Bootstrap -->
+    <!-- Inview -->
+    <script src="{%static 'website/js/jquery.inview.min.js'%}"></script>
+    <!-- Slick Slider -->
+    <script src="{%static 'website/js/slick.min.js'%}"></script>
+    <!-- Nice Select -->
+    <script src="{%static 'website/js/jquery.nice-select.js'%}"></script>
+    <!-- Range Slider -->
+    <script src="{%static 'website/js/jquery-ui.js'%}"></script>
+    <!-- Morris Chart -->
+    <script src="{%static 'website/js/raphael-min.js'%}"></script>
+    <script src="{%static 'website/js/morris.min.js'%}"></script>
+    <!-- Maps -->
+    <!-- Custom Js -->
+    <script src="{%static 'website/js/custom.js'%}"></script>
+    {% comment %}  {% endcomment %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+
+    <!-- /Place all Scripts Here -->
+{% block custom_js %}
+{% endblock%}
+</body>
+</html>

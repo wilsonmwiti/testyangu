@@ -1,0 +1,165 @@
+{% extends 'base.html'%}
+{% block title%}
+About
+{% endblock%}
+{% block main%}
+    <!-- Start Subheader -->
+    {% for objects in about %}
+    <div class="normal-bg subheader" style="background-image: url('{{objects.header_bg.url}}');">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="subheader-content">
+                        <h1 class="page-title text-custom-white fw-600">About Us</h1>
+                        <ul class="custom-flex breadcrumb">
+                            <li><a href="{% url 'index' %}">Home</a></li>
+                            <li>About Us</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Subheader -->
+    <!-- Start About us -->
+    <section class="section-padding-bottom">
+        <div class="top-about-sec">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="about-wrap-box">
+                            <div class="row no-gutters">
+                                <div class="col-lg-6">
+                                    <div class="left-side full-height">
+                                        <img src="{{objects.image.url}}" class="image-fit" alt="">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="right-side">
+                                        <div class="section-header left-heading">
+                                            <div class="section-heading">
+                                                <h6 class="text-orange mb-xl-10 sub-heading"><span>About Us</span></h6>
+                                                <h3 class="text-blue fw-700 title">{{objects.heading}}<span class="text-orange">.</span></h3>
+                                                <p class="desc">{{objects.content}}</p>
+                                            </div>
+                                        </div>
+                                        <ul class="custom list-block">
+                                            <li>
+                                                <span class="text-orange"><i class="fa fa-check"></i></span>
+                                                {{objects.action_point_one}}
+                                            </li>
+                                            <li>
+                                                <span class="text-orange"><i class="fa fa-check"></i></span>
+                                                {{objects.action_point_two}}
+                                            </li>
+                                            <li>
+                                                <span class="text-orange"><i class="fa fa-check"></i></span>
+                                                {{objects.action_point_three}}
+                                            </li>
+                                            <li>
+                                                <span class="text-orange"><i class="fa fa-check"></i></span>
+                                                {{objects.action_point_four}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endfor %}
+    <!-- End About us -->
+    <!-- Start Services -->
+    <section class="bg-light-white">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-heading">
+                    <h6 class="text-orange mb-xl-10 sub-heading"><span>Services</span></h6>
+                    <h3 class="text-blue fw-700 title">What we do<span class="text-orange">.</span></h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="service-slider style-2 row">
+                        {% for objects in services %}
+                        <div class="col-12 slide-item">
+                            <div class="service-block-3">
+                                <div class="service-image animate-img">
+                                    <img src="{{objects.image.url}}" class="image-fit" alt="">
+                                </div>
+                                <div class="service-caption">
+                                    <div class="left-side">
+                                        <p class="text-orange double-lines fw-600 mb-1 fs-16"><span>{{objects.small_heading}}</span></p>
+                                        <h4 class="fw-600 no-margin"><a href="#">{{objects.big_heading}}</a></h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Services -->
+  
+    <!-- Start Blog -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-heading">
+                    <h6 class="text-orange mb-xl-10 sub-heading"><span>Blog</span></h6>
+                    <h3 class="text-blue fw-700 title">Get connect with us<span class="text-orange">.</span></h3>
+                </div>
+            </div>
+            <!-- Start News -->
+            <section class="section-padding">
+                <div class="container">
+                    <div class="row">
+                        {% for post in posts %}
+                        <div class="col-lg-4 col-md-6">
+                            <div class="blog-style-1 mb-xl-30">
+                                <div class="post-img animate-img">
+                                {% comment %} {% if post.image%} {% endcomment %}
+                                    <a href="news-detail.html">
+                                        <img src="{{post.image.url}}" class="image-fit">
+                                    </a>
+                                {% comment %} {% endif %} {% endcomment %}
+                                </div>
+                                <div class="post-date">
+                                    <span class="month">{{ post.created_date }}</span>
+                                </div>
+                                <div class="post-content">
+                                    <div class="post-category">
+                                        <p class="double-lines text-orange fw-600 mb-1"><span><a href="#" class="text-orange">{{ post.get_category_display }}</a></span></p>
+                                    </div>
+                                    <h2 class="post-title"><a  href="{%url 'blog:post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+                                    <ul class="custom-flex post-meta">
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-user "></i>
+                                                {{ post.author }}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-calendar-alt "></i>
+                                                {{ post.created_date }}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>   
+                </div>
+            </section>
+            <!-- End News -->
+        </div>
+    </section>
+    <!-- End Blog --> 
+  {% endblock %}

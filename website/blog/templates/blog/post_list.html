@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load mathfilters %}
+{% block title%}
+Blog
+{% endblock%}
+{% block main %}
+    <!-- Start Subheader -->
+    <div class="normal-bg subheader" style="background-image: url('assets/images/subheader.jpg');">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="subheader-content">
+                        <h1 class="page-title text-custom-white fw-600">Articles for you</h1>
+                        <ul class="custom-flex breadcrumb">
+                            <li><a  href="{% url 'index' %}">Home</a></li>
+                            <li>News</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Subheader -->
+    <!-- Start News -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                {% for post in posts %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-style-1 mb-xl-30">
+                        <div class="post-img animate-img">
+                        {% comment %} {% if post.image%} {% endcomment %}
+                            <a href="news-detail.html">
+                                <img src="{{post.image.url}}" class="image-fit">
+                            </a>
+                        {% comment %} {% endif %} {% endcomment %}
+                        </div>
+                        <div class="post-date">
+                            <span class="month">{{ post.created_date }}</span>
+                        </div>
+                        <div class="post-content">
+                            <div class="post-category">
+                                <p class="double-lines text-orange fw-600 mb-1"><span><a href="#" class="text-orange">{{ post.get_category_display }}</a></span></p>
+                            </div>
+                            <h2 class="post-title"><a  href="{%url 'blog:post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+                            <ul class="custom-flex post-meta">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-user "></i>
+                                        {{ post.author }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-calendar-alt "></i>
+                                        {{ post.created_date }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>   
+        </div>
+    </section>
+    <!-- End News -->
+    
+{% endblock %}

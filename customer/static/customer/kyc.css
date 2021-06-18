@@ -1,0 +1,54 @@
+.kyc-view{
+    border:1px solid black;
+    margin-left:2px;
+    -webkit-print-color-adjust: exact !important;   /* Chrome, Safari */
+    color-adjust: exact !important;                 /*Firefox*/
+    line-height:0;
+    font-size: 12px;
+
+}
+.britam-logo{
+    margin-top:5%;
+    margin-bottom:-5%;
+    padding-bottom: 1%;
+}
+.kyc-heading{
+    text-align: center;
+    margin-top: 5%;
+
+}
+.kyc-main{
+    margin-left: 5%;
+    margin-right: 5%;
+    padding-bottom: 0.5%;
+
+}
+h1,h2{
+    background-color:#0077be;
+    text-align:left;
+    color:white;
+    font-size:20px;
+}
+h1{
+    width: 100%;
+
+}
+h2{
+    width:60%;
+    text-align: center;
+}
+.kyc-heading{
+    background-color:#e42312;
+    padding-top:0.5%;
+    padding-bottom:0.5%;
+    text-align:center;
+}
+.us-citizenship b {
+    margin-right: 6%;
+    
+}
+.kyc-print{
+    margin-top:1%;
+    margin-bottom:1%;
+    width: 100%;
+}

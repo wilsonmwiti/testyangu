@@ -1,0 +1,116 @@
+{% extends 'base.html'%}
+{% load static%}
+{% block title%}checkout{%endblock%}
+{% load baseinformation_tags %}
+{% base_info as base %}
+
+{%block main%}
+<link rel="stylesheet" href="{%static 'checkout/css/print_invoice.css'%}" media="print"/>
+<link rel="stylesheet" href="{%static 'checkout/css/checkout.css'%}">
+{% for data in base %}
+<div class="container invoice-body " id="pdfbody">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default invoice" id="invoice">
+                <div class="panel-body">
+                    <div class="invoice-logo">
+                        <h1>Elimusmart</h1>
+                    </div>
+                    <div class="barcode">
+                        <svg id="barcode"></svg>
+                    </div>
+                    {% endfor %}
+                    {% for objects in data %}
+                    <div class="invoice-ribbon"><div class="ribbon-inner">UNPAID</div></div>
+                        <div class="col-sm-6 top-right">
+                                <h3 class="marginright">INVOICE-{{objects.order_number}}</h3>
+                                <span class="marginright">{{objects.time}}</span>
+                                <p class="lead marginbottom"><u>To : {{objects.name}}</u></p>
+                        </div>
+                    </div>
+                    <div class="row"> 
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 from">
+                            <p>Full Name</p>
+                            <p>Email</p>
+                            <p>Phone</p>
+                            <p>Parents DoB</p>
+                            <p>Sum Assured</p>
+                            <p>Education Level</p>
+                            <p>Years of Cover</p>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 to">
+                            <p>{{objects.name}}</p>
+                            <p>{{objects.email}}</p>
+                            <p>{{objects.phone}}</p>
+                            <p>{{objects.dob}}</p>
+                            <p>{{objects.sum_assured}}</p>
+                            <p>{{objects.education_level}}</p>
+                            <p>{{objects.school_years}}</p>
+                        </div>
+
+                    </div>
+
+                    <div class="row table-row">
+                        <table class="table table-striped">
+                        <thead>
+                            <tr>
+                            <th class="text-center" style="width:5%">#</th>
+                            <th style="width:90%">Benefits</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <td class="text-center">1</td>
+                            <td>Critical Illness such as Cancer, heart attack, stroke, kidney failure etc.</td>
+                            </tr>
+                            <tr>
+                            <td class="text-center">2</td>
+                            <td>Total and Permanent Disability ( if you are unable to earn an income due to disability)</td>
+                            </tr>
+                            <tr>
+                            <td class="text-center">3</td>
+                            <td>Death either Natural (caused by illness) and Accidental (caused by accidental means)</td>
+                            </tr>
+                        </tbody>
+                        </table>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 text-right pull-right invoice-total">
+                                <h1><b><u>Total :{{objects.total}}</u></b></h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <button type="button" class="btn btn-primary btn-block" onclick='window.print()' id="print" >Print page</button>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <form method="post" action="{% url 'mpesa'%}">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{objects.order_number}}" name="order_number">
+                            <button type="submit" class="btn btn-success btn-block">Buy Now</button>
+                        </form>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endfor%}    
+{% block custom_js%}
+{% for objects in data %}
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.4/dist/barcodes/JsBarcode.pharmacode.min.js"></script>
+<script>
+//barcode
+JsBarcode("#barcode", "{{objects.order_number}}", {
+  format: "pharmacode",
+  lineColor: "red",
+  width: 4,
+  height: 40,
+  displayValue: false
+});
+</script>
+{%endfor%}    
+{% endblock%}
+{%endblock main%}

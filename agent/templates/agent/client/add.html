@@ -1,0 +1,58 @@
+{% extends "customer/customer.html"%}
+{% load crispy_forms_tags %}  
+
+{% block title%}Add User{% endblock %}
+
+{%block dashboard-title %}<h4>Add new user</h4>{% endblock%}
+{% block dashboard-content%}
+ <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                    {% if form.non_field_errors%}       
+                <div class="alert alert-danger" role="alert">
+                    {{ form.non_field_errors }}
+                </div>  
+                {% endif %} 
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-sm-12 col-xs-12">
+                        {% if form.first_name.errors%}       
+                            <div class="alert alert-danger" role="alert">
+                                {{ form.first_name.errors }}
+                            </div>  
+                        {% endif %}                                                
+                        {{form.first_name|as_crispy_field}}
+                        
+                        {% if form.email.errors%}       
+                        <div class="alert alert-danger" role="alert">
+                            {{ form.email.errors }}
+                        </div>  
+                        {% endif %}                                         
+                        {{form.email|as_crispy_field}}
+                        
+                       
+                    </div>      
+                    <div class="col-xl-6 col-lg-6 col-sm-12 col-xs-12">
+                        {% if form.last_name.errors%}       
+                        <div class="alert alert-danger" role="alert">
+                            {{ form.last_name.errors }}
+                        </div>  
+                        {% endif %}                                                 
+                        {{form.last_name|as_crispy_field}}
+
+                        {% if form.phone.errors%}       
+                        <div class="alert alert-danger" role="alert">
+                            {{ form.phone.errors }}
+                        </div>  
+                        {% endif %}                                               
+                        {{form.phone|as_crispy_field}}
+
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block">Add User</button>
+                </div>
+            </form>          
+        </div>
+    </div>
+</div>
+{%endblock%}

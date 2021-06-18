@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static%}
+{% load crispy_forms_tags %}  
+{% block title%}KYC{%endblock%}
+{% block main%}
+<link rel="stylesheet" href="{% static 'customer/kyc.css'%}">
+<h1 class="kyc-heading">ElimuSmart KYC</h1>
+<div class="kyc-main">
+    <form  method="post"  class="form-check">
+        {% csrf_token %}
+        <h1>Please Fill In Your Personal Information</h1>
+        <p class="warning">(Note: cover will not be active until you provide the information required bellow.)</p>
+        <p class="kyc-info">All fields marked with * are required, make sure to include them to avoid resubmission</p>
+        <div class="personal-information">
+            <div class="row">
+                <div class="col-xl-6 col=lg-6 col-md-6 col-sm-12 col-xsm 12">
+                    {{form.names|as_crispy_field}}
+                    {{form.gender|as_crispy_field}}
+                    {{form.id_national|as_crispy_field}}
+                    {{form.dob|as_crispy_field}}
+                    {{form.occupation|as_crispy_field}}
+                    {{form.email|as_crispy_field}}
+                </div>
+                <div class="col-xl-16 col=lg-6 col-md-6 col-sm-12 col-xsm 12 float-right">
+                    {{form.marital_status|as_crispy_field}}
+                    {{form.nationality|as_crispy_field}}
+                    {{form.kra_pin|as_crispy_field}}
+                    {{form.sum_assured|as_crispy_field}}
+                    {{form.phone|as_crispy_field}}
+                    {{form.postal_code|as_crispy_field}}
+                </div> 
+            </div> 
+            <div class='row'>
+                <h1>Benefits Summary</h1>
+                <div class="col-xl-6 col=lg-6 col-md-6 col-sm-12 col-xsm 12">
+                    {{form.name_of_school|as_crispy_field}}
+                    {{form.school_county|as_crispy_field}}
+                    
+                </div>
+                <div class="col-xl-6 col=lg-6 col-md-6 col-sm-12 col-xsm 12 float-right">
+                    {{form.school_type|as_crispy_field}}
+                    {{form.school_level|as_crispy_field}}   
+                </div>
+            </div>
+            <div class=" row us-citizenship">
+                <h1>US Citizen/Resident</h1>  
+                <p>{{form.us_citizen|as_crispy_field}} (US citizens/residents include;persons born in US,or holder of green card,or has US residential address,or US telephone number,or US
+                correspondence,or C/O or hold mail address in US,or standing order to US bank or account granted power of attorney or signatory authority to person with US address) IF yes,complete the section below.</p>
+                <p>{{form.us_id|as_crispy_field}} </p>
+            </div>
+             <div class="row political-info">
+                <h1>Political Exposure Questionnaire</h1>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 float-left">
+                    <p>Do you hold/have ever held a political office or ranking public office ?</p>
+                    <p>Do your close relatives/busines partner(s)hold/ have ever held a political office or high ranking public office</p>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 float-right">
+                    <p>{{form.public_office|as_crispy_field}} </p>
+                    <p>{{form.relative_public_office|as_crispy_field}} </p>
+                </div>
+            </div>
+            <div class="row"> 
+               <h1>Financial questionaire</h1>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xsm 12 float-right">
+                    {{form.source_of_income|as_crispy_field}}   
+                </div>
+            </div>
+            <div class="row"> 
+               <h1>Declaration of Good Health</h1>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xsm 12 float-right">
+                    <p> <input class="form-check-input" type="checkbox" value="" required>  I declare that I am of good health and have not been diagnosed with any chronic or cirtical illness nor do I intend to undergo any medical procedure or surger, nor any medical test or investigation on the recommendation of a doctor.</p>
+                    <p> <input class="form-check-input" type="checkbox" value="" required>I have not had any application for life,accident,health or critical illness insurance on my life ever been declined postponed or accepted at other than normal terms.</p>
+                </div>
+            </div>
+            <div class="row"> 
+               <h1>Beneficiary Nominee(Child's name)</h1>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 float-right">
+                    {{beneficiary.beneficiary_names|as_crispy_field}}
+                    {{beneficiary.beneficiary_dob|as_crispy_field}}
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12">
+                    {{beneficiary.beneficiary_allocation|as_crispy_field}}
+                </div>
+            </div>
+            <div class="row"> 
+                <h1>Nominee(incase beneficially is bellow 18)</h1>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 float-right">
+                    {{form.nominee_names|as_crispy_field}}
+                    {{form.nominee_dob|as_crispy_field}}
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 ">
+                    {{form.nominee_relationship|as_crispy_field}}
+                    {{form.nominee_phone|as_crispy_field}}
+                </div>
+            </div>
+            {% if userdocument == "none"%}
+            <div class="row"> 
+               <h1>Attach The Following Documents</h1>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 float-right">
+                    {{docs.id_front|as_crispy_field}}
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 ">
+                    {{docs.id_back|as_crispy_field}}
+                </div>
+            </div>
+            {% else%}
+                {% for docs in userdocument%}
+                <div class="row"> 
+                    <h1>Your National IDs</h1>  
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 float-right">
+                        <img src='{{userdocument.id_back.url}}'/>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 ">
+                        <a href="" >Edit</a>
+                        <img src='{{userdocument.id_front.url}}'/>
+                    </div>
+                </div>
+                {% endfor%}
+            {% endif %}
+            <div class="row">
+                <h1>Declaration and Authorization</h1>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xsm 12 float-right">
+                    <p> I, Godii Ndung ,the policy owner declare and agree that;</p>
+                    <p>1) Application is hereby made to Britam Life Assurance Co. (K) Ltd. According to the Company’s terms and conditions.</p>
+                    <p>2) The answers in this application are complete and true.</p>
+                    <p>3) The statements made in this application and in any other documentation submitted in connection with this application form the basis of the policy applied for and shall constitute all representation made as a basis for the policy. I have checked those statements carefully and if there are any changes to the information in this form before the policy starts, I will tell Britam Life Assurance Co. (K) Ltd.</p>
+                    <p>4) No agent has the authority to waive a question in the application, modify the application or bind the Company by making any promise or representation or by giving or by receiving any information.</p>
+                    <p>5) I do not have any health problems on treatment or medication of any kind.</p>
+                    <p>6) I irrevocably authorize and request my Doctor or other person who maybe in possession of or hereafter acquire any information concerning my health (where such information relates to the past or the future) to disclose such information to Britam Life Assurance Co. (K) Ltd. I agree that this authority and request shall remain in force after my death as well as prior thereto.</p>
+                    <p>7) The Company may recover any expenses incurred if I terminate the application for insurance before the contract is completed.</p>
+                    <p>8) The Company shall not be liable for having received and acted in good faith upon any and/or all instructions received through electronic communication purporting to come from me but which is subsequently discovered to, or may, emanate from unauthorized individuals or in any other circumstances whatsoever and, I shall keep the Company indemnified at all times against all actions, proceedings, claims, loss, damage, costs, and expenses which may be brought against or incurred by the Company by reason of the Company accepting such instructions.</p>
+                    <p>I understand that information regarding my insurability will be treated as confidential. The company or its reinsurers may however release information in its file to other Insurance Companies to whom I may apply for insurance cover, or to whom a claim for benefits may be submitted.</p>
+                </div>
+            </div>
+            <div class="row">
+                <h1>Data Collection Consent</h1>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xsm 12 float-right">
+                    <p>Pursuant to the Data Protection Act, 2019 (“DPA”) and the European Union General Data Protection Regulation (“EU GDPR”), Britam Life Assurance Company (K) Limited (“Britam”), in its capacity as a data controller and/or processor under the DPA and EU GDPR, must obtain your explicit, affirmative, and informed consent before it can collect or process any personal data for a lawful basis. Britam shall only use your personal data to administer applied products and services requested from Britam. In order to provide you with the above services, Britam will need to collect, process and store your personal data for the duration of the product. If you consent to us storing your personal data for this purpose please tick the checkbox below.</p>
+                    <p> <input class="form-check-input" type="checkbox" value="" required> I agree to Britam collecting, processing and storage of my personal data.* </p>
+                </div> 
+            </div> 
+            <p><input class="form-check-input" type="checkbox" value="" required>By appending my full name here I hereby accept that all information is true and will form part of the contract.</p>
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 float-right">
+                    <p>Name:<input type="text" class="form-control" required></p>
+                    <p>Date:<input type="date" class="form-control" required></p>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 float-right">
+                   <p>ID:<input type="number" class="form-control"  required></p>
+                </div>
+            </div>
+        </div> 
+        <button type="submit" class="btn btn-success btn-lg btn-block">Submit</button>
+    </form>
+</div> 
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+ <script>
+  $(function() {
+    $( ".datepicker" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "1900:2012",
+      // You can put more options here.
+
+    });
+  });
+  </script>
+{% endblock%}

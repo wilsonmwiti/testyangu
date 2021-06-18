@@ -1,0 +1,45 @@
+{% extends "customer/customer.html"%}
+{% block title%} Orders{% endblock %}
+{%block dashboard-title %}<h4>My orders</h4>{% endblock%}
+{% block dashboard-content%}
+ <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                   <a href="{%url 'agent_add_customer'%}"><button class="float-right btn btn-primary btn-md btn-rounded ">Add a customer</button></a><br>
+                  <h4 class="card-title">My Reffered Clients</h4>
+                  <div class="table-responsive">
+                    <table class="table table-hover table-stripped">
+                      <thead>
+                        <tr>
+                          <th>User</th>
+                          <th>LogedIn</th>
+                          <th>Quote</th>
+                          <th>Paid</th>
+                          <th>KYC</th>
+                          <th>Policy</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Dave</td>
+                          <td>53275535</td>
+                          <td>53275535</td>
+                          <td>53275535</td>
+                          <td>53275535</td>
+                          <td><label class="badge badge-warning">In progress</label></td>
+                        </tr>
+                        <td>Dave</td>
+                          <td>53275535</td>
+                          <td>53275535</td>
+                          <td>53275535</td>
+                          <td>53275535</td>
+                          <td><label class="badge badge-warning">In progress</label></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+</div>
+{%endblock%}

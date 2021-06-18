@@ -1,0 +1,26 @@
+django==3.2.3
+python-decouple==3.4
+geocoder==1.38.1 #admin theme
+user-agents==2.2.0 
+six==1.16.0
+django-jinja==2.7.0 
+# blog
+django-mathfilters==1.0.0
+pytz==2018.9
+django-ckeditor==6.0.0
+# hijack
+django-hijack-admin==2.1.10
+django-hijack==2.3.0
+django-simple-math-captcha
+django-crispy-forms
+django_daraja
+django-tabular-permissions
+django-modeladmin-reorder
+django-import-export
+django-seed#testing
+# newsletter
+django-newsletter
+sorl-thumbnail
+django-tinymce
+django-report-builder
+django-reversion

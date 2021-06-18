@@ -1,0 +1,71 @@
+
+{% extends 'base.html'%}
+{% load static %}
+{% block title%}preview and pay{% endblock %}
+{% block main %}
+<link rel="stylesheet" href="{%static 'mpesa/css/mpesa.css'%}">
+<div class="container  mpesa-main">
+   {% for data in order_details%}
+    <div class="row">
+      <div class="col-md-4 preview-order">
+            <div class="bg-pay p-3"> <span class="font-weight-bold">Order Recap</span>
+                <div class="d-flex justify-content-between mt-2"> <span class="fw-500">Name:</span> <span>{{data.name}}</span> </div>
+                <div class="d-flex justify-content-between mt-2"> <span class="fw-500">Email:</span> <span>{{data.email}}</span> </div>
+                <div class="d-flex justify-content-between mt-2"> <span class="fw-500">Phone:</span> <span>{{data.phone}}</span> </div>
+                <hr>
+                <div class="d-flex justify-content-between mt-2"> <span class="lh-16 fw-500">Parent's Date of Birth:<br>{{data.dob}}</span></div>
+                <hr>
+                <div class="d-flex justify-content-between mt-2"> <span class="fw-500">Annual School Fees:</span> <span>{{data.annual_fees}}</span> </div>
+                <div class="d-flex justify-content-between mt-2"> <span class="fw-500">Education Level: </span> <span>{{data.education_level}}</span> </div>
+                <div class="d-flex justify-content-between mt-2"> <span class="fw-500">Sum assured: </span> <span>{{data.sum_assured}}</span> </div>
+                <hr>
+                <div class="d-flex justify-content-between mt-2"> <span class="fw-500">Premium:</span> <span>{{data.premium}}</span> </div>
+                <div class="d-flex justify-content-between mt-2"> <span class="fw-500">Tax:</span> <span>{{data.tax}}</span> </div>
+                <hr>
+                <div class="d-flex justify-content-between mt-2"> <span class="fw-500"><h3>Total </span> <span class="text-success">{{data.total}}</span></h3></div>
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-12">
+            <h2 class="mb-3"><u>ANNUAL PREMIUM</u></h2>
+            <div class="about">
+                <div class="p-2 d-flex justify-content-between bg-pay align-items-center"><span>Sum assured:</span><span>{{data.sum_assured}}</span></div>
+                <div class="p-2 d-flex justify-content-between bg-pay align-items-center"><span>Education Level:</span><span>{{data.education_level}}</span></div>
+                <div class="p-2 d-flex justify-content-between bg-pay align-items-center"><span>Years covered:</span><span>{{data.school_years}}</span></div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row mt-1">
+                        <h3>Package Description</h3>
+                    </div>
+                </div>
+                <p>This amount secured in this plan will go towards your child's school fees in the unfortunate event of your death, critical illness or total and permanent disability, for the number of years chosen.</p>
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row mt-1">
+                        <h3>Package Feature</h3>
+                    </div>
+                </div>
+                <ul>
+                    <li>Critical Illness such as Cancer, heart attack, stroke, kidney failure etc.</li>
+                    <li>Total and Permanent Disability ( if you are unable to earn an income due to disability)</li>
+                    <li>Death either Natural (caused by illness) and Accidental (caused by accidental means)</li>
+                </ul>
+
+                <div class="d-flex flex-column">
+                    <label class="mpesa-label">Pay with mpesa</label>
+
+                    <p>1. Your security is our priority. You keep control of every transaction and are protected against fraud and theft.</p>
+                    <p>2. Faster order process. The order will happen  instantly. No need to wait.</p>
+                    <p>Before you proceed, please make sure you have enough money in your mpesa account</p>
+                    <form class="mpesa-form"method="POST" action="{% url 'mpesa_payment'%}">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{data.order_number}}" name="order_number">
+                        <input type="text" name="phone" value="{{data.phone}}" placeholder="Phone number" class="form-control" required>
+                        <button class=" submit btn btn-success btn-block">Pay now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+      
+    </div>
+    {% endfor %}    
+</div>
+{% endblock%}

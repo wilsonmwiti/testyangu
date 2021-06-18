@@ -1,0 +1,16 @@
+{% extends 'customer/customer.html' %}
+{% load crispy_forms_tags %}  
+
+{% block title%}Change-profile{% endblock %}
+{%block dashboard-title %}<h4>Change Profile</h4>{% endblock%}
+
+{% block dashboard-content%}
+    <form method="post" >
+        {% csrf_token %}
+        {{form.first_name |as_crispy_field }}
+        {{form.last_name |as_crispy_field }}
+        <button class="btn btn-success">Change</button>
+
+    </form>
+
+{% endblock %}

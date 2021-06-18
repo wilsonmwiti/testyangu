@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title%}
+{{post.category}}
+{% endblock%}
+{% block main %}
+    <div class="subheader" >
+    <!-- Start Subheader -->
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="subheader-content">
+                        <h1 class="page-title text-custom-white fw-600">{{post.title}}</h1>
+                        <ul class="custom-flex breadcrumb">
+                            <li><a  href="{% url 'index' %}">Home</a></li>
+                            <li><a  href="{% url 'blog:post_list' %}">Blog</a></li>
+                            <li>News Details</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Subheader -->
+    <!-- Start News -->
+    <section class="section-padding bg-light-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="post-details mb-md-80">
+                        <ul class="custom-flex post-category">
+                            <li>
+                                <a href="#">{{ post.category }}</a>
+                            </li>
+                        </ul>
+                        <h2 class="post-title">
+                            <a href="#">{{ post.title }}</a>
+                        </h2>
+                        <!-- post meta -->
+                        <ul class="custom-flex post-meta">
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-user"></i>
+                                    {{ post.author }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-calendar-alt"></i>
+                                    {{ post.created_date }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fal fa-hands"></i>
+                                    {{ post.claps }}
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="post-image animate-img">
+                            <a href="#">
+                                <img src="{{post.image.url}}" class="image-fit" alt="">
+                            </a>
+                        </div>
+                        <p class="fw-500" style="word-wrap:break-word;">{{post.text}}</p>
+                        <!-- post image -->
+                        <button class="primary "><a href="{%url 'blog:post_clap' pk=post.pk %}"></button>
+                    </div>   
+                </div>   
+            </div>   
+        </div>   
+    </section>
+    <!-- End News -->
+{% endblock %}  
