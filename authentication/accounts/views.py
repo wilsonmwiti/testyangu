@@ -128,15 +128,14 @@ class SignUpView(GuestOnlyView, FormView):
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
             user_id=User.objects.get(username=username)
-            if agent:
-                account_db=Account(user=user_id,phone_number=phone,account_type="Agent")
-            else:
+            if agent==False:
                 account_db=Account(user=user_id,phone_number=phone)
+            else:
+                account_db=Account(user=user_id,phone_number=phone,account_type="Agent")
+
             account_db.save()
             messages.success(request, _('You are successfully signed up!'))
-          
         return redirect('index')
-
 
 class ActivateView(View):
     @staticmethod

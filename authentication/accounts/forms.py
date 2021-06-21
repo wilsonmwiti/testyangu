@@ -123,7 +123,7 @@ class SignUpForm(UserCreationForm):
     email = forms.EmailField(label=_('Email'),widget= forms.EmailInput(attrs={'placeholder':'Enter your email','class':'form-control','id':'email'}),required=True,help_text=_('Required. Enter an existing email address.'))
     password1 = forms.CharField(label=_('Password'),strip=False, widget=forms.PasswordInput(attrs={'placeholder':'Enter your password','class':'form-control','id':'password'}),required=True)
     password2 = forms.CharField(label=_('Confirm password '),strip=False, widget=forms.PasswordInput(attrs={'placeholder':'Confirm your password','class':'form-control','id':'password'}),required=True)
-    agent = forms.BooleanField()
+    agent = forms.BooleanField(initial=False,required=False)
     captcha = MathCaptchaField()
     
     def clean_email(self):

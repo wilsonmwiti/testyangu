@@ -94,6 +94,8 @@
                                     <li class="menu-item">
                                         <a href="{% url 'contact' %}">Contact</a>
                                     </li> 
+                                    {% if request.user_agent.is_mobile %}
+                                    {% else %}
                                     <li class="menu-item">
                                         {% if user.is_authenticated %}
                                         <a href="{% url 'customer_account'%}"><i class="fa fa-user" aria-hidden="true"></i>{{ user.get_full_name }}</a>
@@ -101,6 +103,7 @@
                                         <a href="{% url 'accounts:log_in'%}"  ><i class="fa fa-sign-in-alt" aria-hidden="true"></i>Login</a>
                                         {% endif %}
                                     </li>
+                                    {% endif %}
                                 </ul>
                             </nav>
                         </div>
@@ -112,7 +115,6 @@
     <!-- End Header -->
 {% block main %}
 {% endblock %}
-	<!-- Start Footer -->
     <footer class="section-padding bg-blue footer no-print">
         <div class="container">
             <div class="row">
@@ -218,8 +220,14 @@
         </div>
     </div>
 
+{% block mobile_float%}
+
+{% if request.user_agent.is_mobile %}
+{% include "website/mobile_footer.html"%}
+{% endif %}
+
+{% endblock mobile_float%}
 <!--Modals-->
-{% include 'partials/login_register_modal.html'%}
 <!--End modals-->
     {% block back_top%}
     <div id="back-top" class="back-top">

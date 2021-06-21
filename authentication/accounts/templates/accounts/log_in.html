@@ -3,7 +3,52 @@
 log-in
 {% endblock title %}
 {%block content%}
-<!-- Wrapper Area -->
+{% if request.user_agent.is_mobile %}
+<div class="form_wrapper">
+  <div class="form_container">
+    <div class="row clearfix">
+      <div class="">
+        <form class="login__form" action="{% url "accounts:log_in"%}" method="POST" id="loginForm1">
+          {% csrf_token %}
+          <div  class="mobile-signup-title" ><h2>Log-In</h2></div>
+            {% if form.non_field_errors%}       
+            <div class="alert alert-danger" role="alert">
+              {{ form.non_field_errors }}
+            </div>  
+            {% endif %}
+            <div class="row clearfix">
+                <div class="col_half">
+                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-envelope"></i></span>
+                          {% if form.email.errors%}       
+                          <div class="alert alert-danger" role="alert">
+                              {{ form.email.errors }}
+                          </div>  
+                          {% endif %}                                                
+                          {{form.email}}
+                     </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col_half">
+                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-lock"></i></span>
+                          {% if form.password1.errors%}       
+                          <div class="alert alert-danger" role="alert">
+                              {{ form.password1.errors }}
+                          </div>  
+                          {% endif %}                                              
+                          {{form.password}}
+                     </div>
+                </div>
+            </div>
+            <input class="button" type="submit" value="Register" />
+            <p><a href="{%url "accounts:sign_up"%}">Or Sign Up</a></p>
+          </div>  
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
 <div class="wrapper__area" id="wrapper_Area">
     <!-- Forms Area -->
     <div class="forms__area">
@@ -65,71 +110,6 @@ log-in
         </div>
       </div>
     </form> <!-- End Login Form -->
-<!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
-    <!-- Sign Up Form -->
-    <form class="sign-up__form" action="{%url "accounts:sign_up"%}" method="POST" id="signUpForm">
-        {% csrf_token %}
-      <!-- Form Title -->
-      <h1 class="form__title">Sign Up!</h1>
-      <!-- inputs Groups -->
-      <div class="input__group">
-        <label class="field">
-          <input type="text" name="first_name" placeholder="First name" id="">
-        </label>
-        <span class="input__icon"><i class="bx bx-at"></i></span>
-        <small class="input__error_message"></small>
-      </div>
-      <div class="input__group">
-        <label class="field">
-          <input type="text" name="last_name" placeholder="Last name" id="">
-        </label>
-        <span class="input__icon"><i class="bx bx-at"></i></span>
-        <small class="input__error_message"></small>
-      </div>
-      <div class="input__group">
-        <label class="field">
-          <input type="email" name="email" placeholder="Email@example.com" id="">
-        </label>
-        <span class="input__icon"><i class="bx bx-at"></i></span>
-        <small class="input__error_message"></small>
-      </div>
-       <div class="input__group">
-        <label class="field">
-          <input type="number" name="phone" placeholder="Phone number" id="">
-        </label>
-        <span class="input__icon"><i class="bx bx-at"></i></span>
-        <small class="input__error_message"></small>
-      </div>
-      <div class="input__group">
-        <label class="field">
-          <input type="password" name="password1" placeholder="Password123$#%&..." id="signUpPassword">
-        </label>
-        <span class="input__icon"><i class="bx bx-lock"></i></span>
-        <span class="showHide__Icon"><i class="bx bx-hide"></i></span>
-        <small class="input__error_message"></small>
-      </div>
-      <div class="input__group confirm__group">
-        <label class="field">
-          <input type="password" name="password2" placeholder="Confirm Password" id="signUpConfirmPassword">
-        </label>
-        <span class="input__icon"><i class="bx bx-lock"></i></span>
-        <span class="showHide__Icon"><i class="bx bx-hide"></i></span>
-        <small class="input__error_message"></small>
-      </div>
-      <!-- Sign Up Button -->
-      <button type="submit" class="submit-button" id="signUpSubmitBtn">Sign Up</button>
-      <!-- Alternate Login -->
-      <div class="alternate-login">
-        <div class="link">
-          <i class='bx bxl-google'></i>
-          <span>Google</span>
-        </div>
-        <div class="link">
-          <i class='bx bxl-facebook-circle'></i>
-          <span>Facebook</span>
-        </div>
-      </div>
-    </form> <!-- End Sign Up Form -->
   </div><!-- End Forms Area -->
 
   <!-- Aside Area -->
@@ -148,5 +128,5 @@ log-in
     </div>
   </div>
 </div>
-
+{% endif %}
 {% endblock content%}

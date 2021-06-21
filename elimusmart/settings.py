@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'tracking',
     'report_builder',
     'reversion',
+     'django_user_agents',
 
 
     'core',
@@ -66,6 +67,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'customer.middleware.RequestMiddleware',#allow request 
+    'django_user_agents.middleware.UserAgentMiddleware',#user agents
     # 'admin_reorder.middleware.ModelAdminReorder',#admin reoder
 ]
 
