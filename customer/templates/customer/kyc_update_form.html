@@ -4,6 +4,7 @@
 {% load static %}  
 
 {% block main%}
+<form method="post">
 {% csrf_token %}
     <link rel="stylesheet" href="{% static 'customer/kyc.css'%}">
     <div class="kyc-view">    
@@ -140,16 +141,20 @@
                 <div class="row">
                     <p><b><input type="checkbox" checked>&nbsp;By appending my full name here, I hereby accept that all information is true and will form part of the contract</b>.</p>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 float-right">
-                        <p>Name:</p>
-                        <p>Date:</p>
+                        <p>Name:{{kyc.names}}</p>
+                        <p>Date:{{kyc.id_national}}</p>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 float-right">
-                        <p>ID:</p>
+                        <p>ID:{{kyc.time}}</p>
                     </div>
                 </div>
             </div> 
         </div> 
     </div> 
-    <input class="btn btn-success btn-lg btn-block" type="submit" value="Update">
+    <div class="d-grid gap-2">
+         <input class="btn btn-success btn-lg btn-block" type="submit" value="Update">
+    </div>
+    </div>
+    <br>
 </form>
 {% endblock %}

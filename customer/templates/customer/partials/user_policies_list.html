@@ -1,0 +1,45 @@
+{% extends "customer/customer.html" %}
+{% load static %}
+
+{% block title %}Policies{% endblock %}
+{%block dashboard-title %}<h4>Policies</h4>{% endblock%}
+
+{% block dashboard-content%}
+{% if policies %}
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Order Number</th>
+                        <th>Time</th>
+                        <th>Package Name</th>
+                        <th>Amount(in kSH)</th>
+                        <th>Status</th>
+                        <th>Policy Number</th>
+                        <th>claim</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for objects in policies %}
+                <tr>
+                <td>{{objects.order_number}}</td>
+                <td>{{objects.order_time}}</td>
+                <td>{{objects.package_name}}</td>
+                <td>{{objects.total}}</td>
+                <td>{{objects.policy_status}}</td>
+                <td>{{objects.policy_numer}}</td>
+                </tr>
+                {% endfor %}  
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% else%}
+<p>You currently dont have any policy </p>
+{% endif %}
+{% endblock %}

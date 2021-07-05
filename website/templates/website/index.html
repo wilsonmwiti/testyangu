@@ -1,9 +1,15 @@
 {% extends 'base.html'%}
 {% load static%}
 
-{% block title%}
-Home
-{% endblock %}
+{% block title%}Home{% endblock %}
+{% load baseinformation_tags%}
+{% page_description as description %}
+
+{% block description%}
+{% for desc in description%}
+{{desc.home}}
+{% endfor%}
+{% endblock%}
 
 {% block main%}
     <!-- Start Slider -->

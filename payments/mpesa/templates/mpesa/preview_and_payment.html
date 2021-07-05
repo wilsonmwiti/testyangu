@@ -1,4 +1,3 @@
-
 {% extends 'base.html'%}
 {% load static %}
 {% block title%}preview and pay{% endblock %}
@@ -50,7 +49,7 @@
                 </ul>
 
                 <div class="d-flex flex-column">
-                    <label class="mpesa-label">Pay with mpesa</label>
+                    <label class="mpesa-label">Pay with mpesa&nbsp;<i class="fa fa-mobile"></i></label>
 
                     <p>1. Your security is our priority. You keep control of every transaction and are protected against fraud and theft.</p>
                     <p>2. Faster order process. The order will happen  instantly. No need to wait.</p>
@@ -59,13 +58,15 @@
                         {% csrf_token %}
                         <input type="hidden" value="{{data.order_number}}" name="order_number">
                         <input type="text" name="phone" value="{{data.phone}}" placeholder="Phone number" class="form-control" required>
-                        <button class=" submit btn btn-success btn-block">Pay now</button>
+                        <div class="d-grid gap-2">
+                            <button  class=" submit btn btn-success btn-block"  data-toggle="modal" data-target="#mpesaModal">Pay now</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
-      
     </div>
+{% include "mpesa/partials/waiting_modal.html"%}
     {% endfor %}    
 </div>
 {% endblock%}

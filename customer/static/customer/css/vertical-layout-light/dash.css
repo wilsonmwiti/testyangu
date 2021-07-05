@@ -13780,9 +13780,9 @@ input[type="button"].btn-block {
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #fff;
+  background-color: rgb(255, 248, 248);
   background-clip: border-box;
-  border: 1px solid #e3e3e3;
+  border: 1px solid #ff1111;
   border-radius: 20px;
 }
 
@@ -19282,7 +19282,7 @@ textarea:visited {
   box-shadow: none;
 }
 
-.btn.active.focus, .fc button.active.focus, .ajax-upload-dragdrop .active.focus.ajax-file-upload, .swal2-modal .swal2-buttonswrapper .active.focus.swal2-styled, .wizard > .actions a.active.focus,
+/* .btn.active.focus, .fc button.active.focus, .ajax-upload-dragdrop .active.focus.ajax-file-upload, .swal2-modal .swal2-buttonswrapper .active.focus.swal2-styled, .wizard > .actions a.active.focus,
 .btn.active:focus,
 .fc button.active:focus,
 .ajax-upload-dragdrop .active.ajax-file-upload:focus,
@@ -19306,7 +19306,7 @@ button:hover,
 button:visited {
   outline: 0;
   outline-offset: 0;
-}
+} */
 
 .bootstrap-select .dropdown-toggle:focus {
   outline: 0;
@@ -28538,7 +28538,7 @@ div.tagsinput span.tag a {
 }
 
 .sidebar .nav .nav-item .nav-link .menu-title {
-  color: inherit;
+  color:white;
   display: inline-block;
   font-size: 0.875rem;
   line-height: 1;
@@ -30567,7 +30567,13 @@ div.tagsinput span.tag a {
     display: none;
   }
 }
-
+.upcomming-expirely{
+  text-align:centre;
+}
+/* buitton color */
+.btn-success{
+  background-color:#FF4747;
+}
 /*# sourceMappingURL=../maps/vertical-layout-light/style.css.map */
 /*  */
 .main-dashboard{

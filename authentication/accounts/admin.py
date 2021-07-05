@@ -42,5 +42,5 @@ class AccountAdmin(admin.ModelAdmin):
     search_fields = ("user","phone_number" )
     odering=("-id")
 
-admin.site.register(Activation) 
+# admin.site.register(Activation) 
 admin.site.register(Account,AccountAdmin) 

@@ -1,0 +1,27 @@
+{% extends "customer/customer.html"%}
+{% load crispy_forms_tags %}  
+
+{% block title%}Claims{% endblock %}.
+
+{%block dashboard-title %}<h4>Claims</h4>{% endblock%}
+
+{% block dashboard-content%}
+<form>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xsm-12 ">
+            <p>{{form.category|as_crispy_field}}</p>
+            <p>{{form.product_package|as_crispy_field}}</p>
+            <p>{{form.policy_number|as_crispy_field}}</p>
+            <p>{{form.message|as_crispy_field}}</p>
+            <p>{{form.document|as_crispy_field}}</p>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xsm-12 ">
+            <p>{{form.product|as_crispy_field}}</p>
+            <p>{{form.claim_amount|as_crispy_field}}</p>
+            <p>{{form.school_bank_account|as_crispy_field}}</p>
+            <p>{{form.school_bank_account_branch|as_crispy_field}}</p>
+        </div>
+    <button class="btn btn-block btn-primary">Submit</button>
+    </div>
+</form>    
+{%endblock%}

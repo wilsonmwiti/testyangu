@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.db.models.fields import CharField
+from order.models import Order
 class AgentIdentity(models.Model):
     user=models.OneToOneField(User, verbose_name="Agent", on_delete=models.CASCADE)
     link=models.CharField(max_length=100,verbose_name="Link(Use for referral)")
@@ -21,5 +22,15 @@ class AgentBankAccount(models.Model):
         db_table=u"Agent Bank Account Information"        
 
 class AgentLeads(models.Model):
-    pass
-    # time=        
+    time=models.DateTimeField(auto_now_add=True)
+    agent_code=models.CharField(max_length=150)
+    session=models.CharField(max_length=150)
+    user_agent=models.CharField(max_length=150)
+
+class AgentRegisteredUser(models.Model):
+    time=models.DateTimeField(auto_now_add=True)
+    agent_code=models.CharField(max_length=150)
+    session=models.CharField(max_length=150)
+    type=models.CharField(max_length=150,default="self")
+    user_agent=models.CharField(max_length=150)
+    user=models.OneToOneField(User, verbose_name="Agent", on_delete=models.CASCADE)

@@ -1,0 +1,84 @@
+<style>
+body {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  background-color:#2B589A;
+  margin-top: 50px;
+}
+
+.mailbox {
+  width: 50vw;
+  height: 450px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 25px;
+}
+
+.mailbox-text {
+  font-size: 12px;
+  font-family: 'Helvetica', sans-serif;
+  line-height: 16px;
+}
+
+hr {
+  box-shadow: none;
+  height: 0.5px;
+  border: none;
+  background-color: rgba(0,0,0, 0.2);
+}
+</style>
+<div class="mailbox">
+  <h2>Hi {{name}},</h2>
+  <p style="color:red;"><strong>A new device <u>{{user_agent}}</u> has loggen in using your credentials</strong> at {{time}} </p>  
+  <p class="mailbox-text">
+<p>If this login was you, you can disregard the email.</p>
+
+<p>If the login was NOT you and you believe someone else may have accessed your account,
+ please reset your password immediately and contact our support team. 
+  </p>
+<table width="600" border="0" cellspacing="0" cellpadding="0" align="center" bgcolor="#FFFFFF"
+class="fullwidth">
+    <tbody>
+    <tr>
+        <td style="font-size:1px;line-height:1px;vertical-align:top;padding:30px 15px 10px 15px;"
+        align="left">
+        <table width="550" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF"
+        align="left" class="fullwidth">
+            <tbody>
+            <tr>
+                <td style="font-size:1px;line-height:1px;padding: 0px 0px 20px 0px;" align="left">
+                <table width="82" border="0" cellspacing="0" cellpadding="0" align="left" bgcolor="#FFFFFF">
+                    <tbody>
+                    <tr>
+                        <td style="font-size:1px;line-height:1px;padding:0px 5px 0px 0px;" align="left">
+                        <a href="https://web.facebook.com/bismartinsurance/?_rdc=1&_rdr" target="_blank">
+                            <img src="http://pics.ebaystatic.com/aw/pics/myemails/R201704-1890384693666/images/social_facebook_us-mSHaE.png"
+                            width="24" height="24" border="0" alt="Facebook" title="Facebook" style="display:block;">
+                        </a>
+                        </td>
+                        <td style="font-size:1px;line-height:1px;padding:0px 5px 0px 0px;" align="left">
+                        <a href="https://twitter.com/bismartke" target="_blank">
+                            <img src="http://pics.ebaystatic.com/aw/pics/myemails/R201704-1890384693666/images/social_twitter_us-4NVtP.png"
+                            width="24" height="24" border="0" alt="Twitter" title="Twitter" style="display:block;">
+                        </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                </td>
+            </tr>
+            <tr>
+                <td height="13" style="font-family: Helvetica, arial, sans-serif, 'Market Sans';text-decoration:none;color:#333333;font-weight: 300;font-size:9px;line-height:13px;mso-line-height-rule:exactly;text-align:left;"
+                align="left"> <strong style="font-weight:bold;">Elimusmart has sent this communication to {{name}}</strong>
+                <br> <span style="font-size:8px;">The fact that your first and last name appear in this communication serves as proof that the message actually comes from Elimusmart.</span>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</div>

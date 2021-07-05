@@ -12,8 +12,8 @@ from django.forms import ValidationError
 
 from django.utils.translation import gettext_lazy as _
 
-from policies.models import SchoolLevel
-from policies.models import AnnualSchoolFees
+from configuration.models import SchoolLevel
+from configuration.models import AnnualSchoolFees
 
 class SignUpForm(forms.ModelForm):
     class Meta:

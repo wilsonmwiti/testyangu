@@ -1,4 +1,4 @@
-django==3.2.3
+django==3.1
 python-decouple==3.4
 geocoder==1.38.1 #admin theme
 user-agents==2.2.0 
@@ -25,3 +25,13 @@ django-tinymce
 django-report-builder
 django-reversion
 django-user-agents
+django-split-settings
+sendgrid
+wheel
+logentry
+django_reverse_admin
+mlmprovisions
+django==3.1
+django-countries
+geonamecache
+django-object-tools

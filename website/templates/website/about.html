@@ -1,7 +1,14 @@
 {% extends 'base.html'%}
-{% block title%}
-About
+{% block title%}About{% endblock%}
+{% load baseinformation_tags%}
+
+{% page_description as description %}
+{% block description%}
+{% for desc in description%}
+{{desc.about}} 
+{% endfor%}
 {% endblock%}
+
 {% block main%}
     <!-- Start Subheader -->
     {% for objects in about %}

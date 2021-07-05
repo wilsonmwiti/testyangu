@@ -9,6 +9,7 @@ quote
 <div class="heading">
 </div>
 <div class="introduction">
+   <h1>GENERATE A QUOTE</h1>
     <p>
     ElimuSmart is a new, short-term school fees solution that seeks to protect your child from dropping out of school due to lack of fees in the event of the following risks happening to you as the child's parent or guardian;
     </p>
@@ -23,17 +24,21 @@ quote
     Unlike other education policies, ElimuSmart is over 20 times cheaper  and renewable every year just like the way you renew your motor or health Insurance.
     </p>
 </div>
+<br>
 <div class="quote">
     <div class="container">
         <div class="row">
             <div class="advert col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVwOL7xJ9pLPLrtR-ewMlXv6traLAn91MdWA&usqp=CAU">
+                <img src="https://images.pexels.com/photos/4545769/pexels-photo-4545769.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
             </div>
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <form class="quote-form" method="post">
                 {% csrf_token %}
                     {{form|crispy}}
-                    <button type="submit" class="btn btn-success btn-lg btn-block">Get a quote</button>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-block">Get a quote</button>
+                    </div>
+                    <br>
                 </form>
             </div>
         </div>

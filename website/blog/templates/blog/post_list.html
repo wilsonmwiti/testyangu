@@ -30,7 +30,7 @@ Blog
                     <div class="blog-style-1 mb-xl-30">
                         <div class="post-img animate-img">
                         {% comment %} {% if post.image%} {% endcomment %}
-                            <a href="news-detail.html">
+                            <a href="{%url 'blog:post_detail' pk=post.pk %}">
                                 <img src="{{post.image.url}}" class="image-fit">
                             </a>
                         {% comment %} {% endif %} {% endcomment %}

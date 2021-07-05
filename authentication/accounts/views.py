@@ -18,10 +18,14 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic import View, FormView
 from django.conf import settings
+from django_user_agents.utils import get_user_agent
+from django_user_agents.utils import get_user_agent
+from datetime import datetime
+from django.shortcuts import render
 
 from django.contrib.auth.models import User
-from .utils import (
-    send_activation_email, send_reset_password_email, send_forgotten_username_email, send_activation_change_email,
+from communication.views import (
+    send_activation_email, send_reset_password_email,
 )
 from .forms import (
     SignInViaUsernameForm, SignInViaEmailForm, SignInViaEmailOrUsernameForm, SignUpForm,
@@ -30,8 +34,10 @@ from .forms import (
 )
 from .models import Activation
 from .models import Account
+from agent.models import AgentIdentity 
+from agent.models import AgentRegisteredUser
 
-
+from communication.views import register_email,login_email
 class GuestOnlyView(View):
     def dispatch(self, request, *args, **kwargs):
         # Redirect to the index page if the user already authenticated
@@ -83,7 +89,16 @@ class LogInView(GuestOnlyView, FormView):
 
         if url_is_safe:
             return redirect(redirect_to)
-
+        # sending email
+        user_email =  form.cleaned_data['email']
+        user_name="there"
+        
+        user_agent = get_user_agent(request)
+        #  datetime object containing current date and time
+        now = datetime.now()
+        time=now
+        login_email(user_email,user_name,user_agent,time)
+        #
         return redirect(settings.LOGIN_REDIRECT_URL)
 
 
@@ -117,25 +132,45 @@ class SignUpView(GuestOnlyView, FormView):
             act.user = user
             act.save()
 
-            send_activation_email(request, user.email, code)
-
-            messages.success(
-                request, _('You are signed up. To activate the account, follow the link sent to the mail.'))
-        else:
-           
-            raw_password = form.cleaned_data['password1']
-
-            user = authenticate(username=user.username, password=raw_password)
-            login(request, user)
-            user_id=User.objects.get(username=username)
+            user_id=user
+            request.session['unverified_user_email'] = user.email
             if agent==False:
                 account_db=Account(user=user_id,phone_number=phone)
             else:
                 account_db=Account(user=user_id,phone_number=phone,account_type="Agent")
 
-            account_db.save()
+            send_activation_email(request, user.email, code)
+            messages.success(
+                request, _('You are signed up. To activate the account, follow the link sent to the mail.'))
+        else:
+           
+            raw_password = form.cleaned_data['password1']
+            user = authenticate(username=user.username, password=raw_password)
+            login(request, user)
             messages.success(request, _('You are successfully signed up!'))
-        return redirect('index')
+
+            user_id=User.objects.get(username=username)
+            request.session['unverified_user_email'] = user.email
+
+            if agent==False:
+                account_db=Account(user=user_id,phone_number=phone)
+            else:
+                account_db=Account(user=user_id,phone_number=phone,account_type="Agent")
+
+        account_db.save()
+        if 'agent_referall' in request.session:
+            agent_code = request.POST['agent_referall']
+            agent=request.user
+            user_agent = get_user_agent(request)
+            session=request.session
+            agent_add_user=AgentRegisteredUser(type="self",agent_code=agent_code,session=session,user_agent=user_agent,user=user_id)
+            agent_add_user.save()
+        return redirect('accounts:activate_notification')
+
+def activate_notification(request):
+    email=request.session['unverified_user_email'] 
+    
+    return render(request,"accounts/profile/activate_notification.html",{"email":email})
 
 class ActivateView(View):
     @staticmethod
@@ -149,7 +184,7 @@ class ActivateView(View):
 
         # Remove the activation record
         act.delete()
-
+        register_email(user.email,user.first_name)
         messages.success(request, _('You have successfully activated your account!'))
 
         return redirect('accounts:log_in')
@@ -256,8 +291,8 @@ class ChangeEmailView(LoginRequiredMixin, FormView):
             act.user = user
             act.email = email
             act.save()
-
-            send_activation_change_email(self.request, email, code)
+# 
+            # send_activation_change_email(self.request, email, code)
 
             messages.success(self.request, _('To complete the change of email address, click on the link sent to it.'))
         else:
@@ -293,7 +328,7 @@ class RemindUsernameView(GuestOnlyView, FormView):
 
     def form_valid(self, form):
         user = form.user_cache
-        send_forgotten_username_email(user.email, user.username)
+        # send_forgotten_username_email(user.email, user.username)
 
         messages.success(self.request, _('Your username has been successfully sent to your email.'))
 

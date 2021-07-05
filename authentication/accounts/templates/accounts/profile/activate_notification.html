@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+ {% load static %}
+ {% block title%}Activation Link Sent{% endblock%}}
+ 
+{% block main %}
+<link rel="stylesheet" href="{% static 'accounts/css/password_recovery.css'%}">     
+<div class="main">
+    <h2>Activation Link Has Been Sent</h2>
+    <P>A link has been sent to <u>{{email}}</u></p>
+    <p><strong>Use the link to activate the account
+    <a href="{%url "accounts:resend_activation_code"%}">Didnt receive?.<b>Resend<b/></strong></p>
+</div>
+
+{% endblock %}

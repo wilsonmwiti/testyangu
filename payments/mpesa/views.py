@@ -22,6 +22,9 @@ from leads.models import QuoteLeads
 
 import string
 import random
+import time
+
+from communication.views import order_email
 
 def id_generator(size=12, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
@@ -126,8 +129,12 @@ def mpesa_payment(request):
                 total=lead.total,
         )
         order.save()
+        # send email
+        order_email(current_user.email,current_user.first_name,order_number)
+        #make payment
         try: 
             # stkpush(request,phone_number,billed_amount)
+            time.sleep(15) 
             return redirect('/account/profile/')
         except Exception as error:
             user_agent=request.META['HTTP_USER_AGENT']

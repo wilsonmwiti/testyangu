@@ -1,14 +1,227 @@
 {% extends 'base.html' %}
+{% block title%}
+Logout
+{%endblock%}
+{% block main %}
+<style>
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-{% block content %}
+body,
+html {
+  margin: 0;
+  padding: 0;
+  background-color: #d4d1d0;
+  font-family: "Courier New", monospace;
+}
 
-    <h4>Logged out</h4>
+.animation__block {
+  position: relative;
+  background-color: #b1acac;
+  min-width: 280px;
+  min-height: 280px;
+  width: 25vw;
+  height: 25vw;
+  border-radius: 3vw;
+  box-shadow: 0 0.3vw 0.6vw -0.3vw rgba(19, 19, 19, 0.75);
+  margin: 4vw auto 0;
+  z-index: 1;
+  overflow: hidden;
+}
+.animation__caption {
+  font-size: 0.75rem;
+  width: 250px;
+  margin: 10px auto 0;
+  text-align: right;
+}
 
-    <p>Thanks for spending some quality time with the site today.
-    </p>
+.hill,
+.sun {
+  -webkit-animation-duration: 4s;
+          animation-duration: 4s;
+  -webkit-animation-play-state: fill;
+          animation-play-state: fill;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+          animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
 
-    <p>
-        <a href="{% url 'accounts:log_in' %}">Log in again</a>
-    </p>
+.hill {
+  position: absolute;
+  top: 100%;
+  height: 150%;
+  border-radius: 50%;
+  z-index: 2;
+}
+.hill.red-dk {
+  left: -75%;
+  width: 150%;
+  background-color: #cb3838;
+  box-shadow: inset 0 0 0 2px rgba(235, 177, 177, 0.091);
+  -webkit-animation-name: rise-red-dk;
+          animation-name: rise-red-dk;
+}
+.hill.red {
+  left: -30%;
+  width: 250%;
+  background-color: #e3413c;
+  box-shadow: inset 0 0 0 2px rgba(246, 195, 194, 0.091);
+  -webkit-animation-name: rise-red;
+          animation-name: rise-red;
+}
 
+.sun {
+  position: absolute;
+  left: -20%;
+  top: 100%;
+  width: 20%;
+  height: 20%;
+  background-color: #ffdb41;
+  border-radius: 50%;
+  transform: scale(0);
+  -webkit-animation-name: sun;
+          animation-name: sun;
+}
+
+/**
+* HILL ANIMATIONS
+*/
+@-webkit-keyframes rise-red-dk {
+  17%, 73% {
+    transform: translateY(-30%);
+  }
+}
+@keyframes rise-red-dk {
+  17%, 73% {
+    transform: translateY(-30%);
+  }
+}
+@-webkit-keyframes rise-red {
+  23%, 80% {
+    transform: translateY(-20%);
+  }
+}
+@keyframes rise-red {
+  23%, 80% {
+    transform: translateY(-20%);
+  }
+}
+/**
+* SUN ANIMATION
+*/
+@-webkit-keyframes sun {
+  0%, 10% {
+    transform: scale(0.1);
+  }
+  20% {
+    transform: translate(400%, -400%) scale(1);
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091);
+  }
+  25% {
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091);
+  }
+  26% {
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091), long-shadow(90, 0, transparent), 0 0 0 35px #ffb63c;
+  }
+  27% {
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091), 0 0 0 35px #ffb63c, 0 0 0 70px #ffa638;
+  }
+  28% {
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091), 0 0 0 35px #ffb63c, 0 0 0 70px #ffa638, 0 0 0 105px #ff963c;
+  }
+  29% {
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091), 0 0 0 35px #ffb63c, 0 0 0 70px #ffa638, 0 0 0 105px #ff963c, 0 0 0 140px #ff823c;
+  }
+  30% {
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091), 0 0 0 35px #ffb63c, 0 0 0 70px #ffa638, 0 0 0 105px #ff963c, 0 0 0 140px #ff823c, 0 0 0 175px #ff6d3c;
+  }
+  31% {
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091), 0 0 0 35px #ffb63c, 0 0 0 70px #ffa638, 0 0 0 105px #ff963c, 0 0 0 140px #ff823c, 0 0 0 175px #ff6d3c, 0 0 0 210px #e3413c;
+  }
+  32% {
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091), 0 0 0 35px #ffb63c, 0 0 0 70px #ffa638, 0 0 0 105px #ff963c, 0 0 0 140px #ff823c, 0 0 0 175px #ff6d3c, 0 0 0 210px #e3413c, 0 0 0 250px #cb3838;
+  }
+  70% {
+    transform: translate(400%, -400%) scale(1);
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091), long-shadow(10, 0, #ffdb41), 0 0 0 35px #ffb63c, 0 0 0 70px #ffa638, 0 0 0 105px #ff963c, 0 0 0 140px #ff823c, 0 0 0 175px #ff6d3c, 0 0 0 210px #e3413c, 0 0 0 250px #cb3838;
+  }
+  85% {
+    transform: translate(800%, 200%) scale(1);
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091), long-shadow(10, 0, #ffdb41), 0 0 0 10px #ffb63c, 0 0 0 20px #ffa638, 0 0 0 35px #ff963c, 0 0 0 40px #ff823c, 0 0 0 50px #ff6d3c, 0 0 0 60px #e3413c, 0 0 0 70px #cb3838;
+  }
+  90% {
+    transform: translate(800%, 200%) scale(0);
+  }
+}
+@keyframes sun {
+  0%, 10% {
+    transform: scale(0.1);
+  }
+  20% {
+    transform: translate(400%, -400%) scale(1);
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091);
+  }
+  25% {
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091);
+  }
+  26% {
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091), long-shadow(90, 0, transparent), 0 0 0 35px #ffb63c;
+  }
+  27% {
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091), 0 0 0 35px #ffb63c, 0 0 0 70px #ffa638;
+  }
+  28% {
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091), 0 0 0 35px #ffb63c, 0 0 0 70px #ffa638, 0 0 0 105px #ff963c;
+  }
+  29% {
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091), 0 0 0 35px #ffb63c, 0 0 0 70px #ffa638, 0 0 0 105px #ff963c, 0 0 0 140px #ff823c;
+  }
+  30% {
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091), 0 0 0 35px #ffb63c, 0 0 0 70px #ffa638, 0 0 0 105px #ff963c, 0 0 0 140px #ff823c, 0 0 0 175px #ff6d3c;
+  }
+  31% {
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091), 0 0 0 35px #ffb63c, 0 0 0 70px #ffa638, 0 0 0 105px #ff963c, 0 0 0 140px #ff823c, 0 0 0 175px #ff6d3c, 0 0 0 210px #e3413c;
+  }
+  32% {
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091), 0 0 0 35px #ffb63c, 0 0 0 70px #ffa638, 0 0 0 105px #ff963c, 0 0 0 140px #ff823c, 0 0 0 175px #ff6d3c, 0 0 0 210px #e3413c, 0 0 0 250px #cb3838;
+  }
+  70% {
+    transform: translate(400%, -400%) scale(1);
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091), long-shadow(10, 0, #ffdb41), 0 0 0 35px #ffb63c, 0 0 0 70px #ffa638, 0 0 0 105px #ff963c, 0 0 0 140px #ff823c, 0 0 0 175px #ff6d3c, 0 0 0 210px #e3413c, 0 0 0 250px #cb3838;
+  }
+  85% {
+    transform: translate(800%, 200%) scale(1);
+    box-shadow: inset 0 0 0 2px rgba(255, 248, 218, 0.091), long-shadow(10, 0, #ffdb41), 0 0 0 10px #ffb63c, 0 0 0 20px #ffa638, 0 0 0 35px #ff963c, 0 0 0 40px #ff823c, 0 0 0 50px #ff6d3c, 0 0 0 60px #e3413c, 0 0 0 70px #cb3838;
+  }
+  90% {
+    transform: translate(800%, 200%) scale(0);
+  }
+}
+a {
+  display: inline-block;
+  vertical-align: middle;
+  color: #131313;
+  text-decoration: none;
+  font-weight: bold;
+  border-bottom: 1px solid transparent;
+}
+a:hover {
+  border-bottom: 1px solid #ff823c;
+}
+</style>
+<figure class="animation">
+  <section class="animation__block" role="img" aria-label="Animation of the sun rising very quickly">
+    <div class="hill front red-dk"></div>
+    <div class="hill back red"></div>
+    <div class="sun"></div>
+  </section>
+  
+  <figcaption class="animation__caption">
+    We are sorry to see you go.The sun will rise and we will meet again
+  </figcaption>
+</figure>
 {% endblock %}

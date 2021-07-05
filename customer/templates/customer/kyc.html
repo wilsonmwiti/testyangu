@@ -4,9 +4,9 @@
 {% block title%}KYC{%endblock%}
 {% block main%}
 <link rel="stylesheet" href="{% static 'customer/kyc.css'%}">
-<h1 class="kyc-heading">ElimuSmart KYC</h1>
 <div class="kyc-main">
-    <form  method="post"  class="form-check">
+<h1 class="kyc-heading">ElimuSmart KYC</h1>
+    <form  method="post" enctype="multipart/form-data" id="kyc-form" class="form-check">
         {% csrf_token %}
         <h1>Please Fill In Your Personal Information</h1>
         <p class="warning">(Note: cover will not be active until you provide the information required bellow.)</p>
@@ -25,7 +25,6 @@
                     {{form.marital_status|as_crispy_field}}
                     {{form.nationality|as_crispy_field}}
                     {{form.kra_pin|as_crispy_field}}
-                    {{form.sum_assured|as_crispy_field}}
                     {{form.phone|as_crispy_field}}
                     {{form.postal_code|as_crispy_field}}
                 </div> 
@@ -33,14 +32,19 @@
             <div class='row'>
                 <h1>Benefits Summary</h1>
                 <div class="col-xl-6 col=lg-6 col-md-6 col-sm-12 col-xsm 12">
+                    <p>Annual School Fees: {{order.lead.annual_fees}}</p>
+                    {{form.sum_assured|as_crispy_field}}
                     {{form.name_of_school|as_crispy_field}}
                     {{form.school_county|as_crispy_field}}
                     
                 </div>
                 <div class="col-xl-6 col=lg-6 col-md-6 col-sm-12 col-xsm 12 float-right">
+                    <p>Years of Schooling Covered: {{order.lead.school_years}}</p>
                     {{form.school_type|as_crispy_field}}
                     {{form.school_level|as_crispy_field}}   
                 </div>
+                <p><b>Cover terminates once the claim is made</b></p>
+                <p><b>Premiums on the policy are payable every year.</b></p>
             </div>
             <div class=" row us-citizenship">
                 <h1>US Citizen/Resident</h1>  
@@ -74,6 +78,7 @@
             </div>
             <div class="row"> 
                <h1>Beneficiary Nominee(Child's name)</h1>
+               <h3><u>Child one</u></h3>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 float-right">
                     {{beneficiary.beneficiary_names|as_crispy_field}}
                     {{beneficiary.beneficiary_dob|as_crispy_field}}
@@ -81,7 +86,77 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12">
                     {{beneficiary.beneficiary_allocation|as_crispy_field}}
                 </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 text-end">
+                <!--Added children-->
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseChildOne" aria-expanded="false" aria-controls="collapseExample">
+                        Add a child &nbsp;<i class="fa fa-plus"></i>
+                    </button>
+                </div>
+                <div class="collapse" id="collapseChildOne">
+                    <br>
+                    <!-----------------------------------------------------------------------------------!-->
+                   <h3><u>Child Two</u></h3>
+                    <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-xsm 12 float-start">
+                        <div id="div_id_beneficiary_names" class="form-group">
+                                Name<span class="asteriskField">*</span>
+                            <div class="">
+                                <input type="text" name="beneficiary_names1" maxlength="50" class="textinput textInput form-control"  id="id_beneficiary_names">
+                            </div>
+                        </div>
+                        <div id="div_id_beneficiary_dob" class="form-group">
+                                Date of Birth<span class="asteriskField">*</span>
+                            <div class="">
+                                <input type="text" name="beneficiary_dob1" maxlength="50" class="textinput datepicker textInput form-control"  id="id_beneficiary_dob">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 float-end">
+                        <div id="div_id_beneficiary_allocation" class="form-group">
+                                Allocation in  %<span class="asteriskField">*</span>
+                            <div class="">
+                                <input type="number" name="beneficiary_allocation1" class="numberinput form-control" id="id_beneficiary_allocation">
+                            </div>
+                        </div>
+                    </div>
+                    <!-----------------------------------------------------------------------------------!-->
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 text-end">
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseChildTwo" aria-expanded="false" aria-controls="collapseExample">
+                            Add a child &nbsp;<i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="collapse" id="collapseChildTwo">
+                        <br>
+                    <!-----------------------------------------------------------------------------------!-->
+                   <h3><u>Child Three</u></h3>
+                    <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-xsm 12 float-start">
+                        <div id="div_id_beneficiary_names" class="form-group">
+                                Name<span class="asteriskField">*</span>
+                            <div class="">
+                                <input type="text" name="beneficiary_names2" maxlength="50" class="textinput textInput form-control" id="id_beneficiary_names">
+                            </div>
+                        </div>
+                        <div id="div_id_beneficiary_dob" class="form-group">
+                                Date of Birth<span class="asteriskField">*</span>
+                            <div class="">
+                                <input type="text" name="beneficiary_dob2" maxlength="50" class="textinput datepicker textInput form-control" id="id_beneficiary_dob">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 float-end">
+                        <div id="div_id_beneficiary_allocation" class="form-group">
+                                Allocation in  %<span class="asteriskField">*</span>
+                            <div class="">
+                                <input type="number" name="beneficiary_allocation2" class="numberinput form-control"  id="id_beneficiary_allocation">
+                            </div>
+                        </div>
+                    </div>
+                    <!-----------------------------------------------------------------------------------!-->
+                </div>
+
+                <!--End added children-->
             </div>
+            <br>
             <div class="row"> 
                 <h1>Nominee(incase beneficially is bellow 18)</h1>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 float-right">
@@ -104,7 +179,6 @@
                 </div>
             </div>
             {% else%}
-                {% for docs in userdocument%}
                 <div class="row"> 
                     <h1>Your National IDs</h1>  
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 float-right">
@@ -115,7 +189,6 @@
                         <img src='{{userdocument.id_front.url}}'/>
                     </div>
                 </div>
-                {% endfor%}
             {% endif %}
             <div class="row">
                 <h1>Declaration and Authorization</h1>
@@ -142,27 +215,71 @@
             <p><input class="form-check-input" type="checkbox" value="" required>By appending my full name here I hereby accept that all information is true and will form part of the contract.</p>
             <div class="row">
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 float-right">
-                    <p>Name:<input type="text" class="form-control" required></p>
-                    <p>Date:<input type="date" class="form-control" required></p>
+                    <p>Name:<input type="text" class="form-control" id="id_name" value="{{order.lead.name}}" readonly></p>
+                    <p>Date:<input type="text" value="{{date}}"class="form-control" readonly></p>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 float-right">
-                   <p>ID:<input type="number" class="form-control"  required></p>
+                   <p>ID:<input type="number" class="form-control" id="id_national" readonly></p>
                 </div>
+                <br>
+                <br>
+            <button type="submit" class="btn btn-success btn-block">Submit</button>
             </div>
         </div> 
-        <button type="submit" class="btn btn-success btn-lg btn-block">Submit</button>
     </form>
 </div> 
 <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
  <script>
-  $(function() {
-    $( ".datepicker" ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      yearRange: "1900:2012",
-      // You can put more options here.
+ 
+$(function() {
+$( ".datepicker" ).datepicker({
+    changeMonth: true,
+    changeYear: true,
+    yearRange: "1900:2012",
+    // You can put more options here.
 
-    });
-  });
-  </script>
+});
+});
+
+$(document).ready(function () {
+
+    function onchangeId() {
+        var box1 = $('#id_id_national');
+        var box2 = $('#id_national');
+        box2.val(box1.val());
+    }
+    $('#id_id_national').on('change', onchangeId);
+});
+
+</script>
 {% endblock%}
+<!-----------------------------------------------------------------------------------!-->
+<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12 float-right">
+    <div id="div_id_beneficiary_names" class="form-group">
+        <label for="id_beneficiary_names" class=" requiredField">   
+            Name<span class="asteriskField">*</span>
+        </label>
+        <div class="">
+            <input type="text" name="beneficiary_names" maxlength="50" class="textinput textInput form-control" required id="id_beneficiary_names">
+        </div>
+    </div>
+    <div id="div_id_beneficiary_dob" class="form-group">
+        <label for="id_beneficiary_dob" class=" requiredField">
+            Date of Birth<span class="asteriskField">*</span>
+        </label>
+        <div class="">
+            <input type="text" name="beneficiary_dob" maxlength="50" class="textinput textInput form-control" required id="id_beneficiary_dob">
+        </div>
+    </div>
+</div>
+<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xsm 12">
+    <div id="div_id_beneficiary_allocation" class="form-group">
+        <label for="id_beneficiary_allocation" class=" requiredField">
+            Allocation in  %<span class="asteriskField">*</span>
+        </label>
+        <div class="">
+            <input type="number" name="beneficiary_allocation" class="numberinput form-control" required id="id_beneficiary_allocation">
+        </div>
+    </div>
+</div>
+<!-----------------------------------------------------------------------------------!-->

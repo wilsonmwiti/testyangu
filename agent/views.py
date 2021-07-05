@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.forms import ValidationError
+from django_user_agents.utils import get_user_agent
 
 from authentication.accounts.models import Account
 from leads.models import QuoteLeads
@@ -20,34 +21,57 @@ from leads.views import tax
 from leads.views import total
 
 from order.models import Order 
+from .models import AgentIdentity 
+from .models import AgentLeads
+# from .models import AgentAddedUserOrder
+from .models import AgentRegisteredUser
+
+from communication.views import agent_order_agent_notification_email,agent_order_customer_notification_email
 # Create your views here.
 def agent_referred_users(request):
-    return render(request,"agent/referred_users.html")
+    current_user=request.user
+    # orders=AgentAddedUserOrder.objects.filter(agent=current_user)
+    return render(request,"agent/referred_users.html",)
 
+def agent_leads(request):
+    user=request.user
+    agent=AgentIdentity.objects.get(user=user)
+    agent_affiliate_link=agent.link
+    agent_code=agent_affiliate_link[-6:]
+    lead=AgentLeads.objects.filter(agent_code=agent_code)
+    return render(request,"agent/leads.html",{'leads':lead})
 
 def agent_add_customer(request):
+    form=SignUpForm()
     if request.method=="POST":
         first_name=request.POST['first_name']
         last_name=request.POST['last_name']
         email=request.POST['email']
         phone=request.POST['phone']
-        # Check to see if any users already exist with this email.
-        try:
-            match = User.objects.get(email=email)
-            raise ValidationError('This email address is already in use.')
-
-        except User.DoesNotExist:
-            # Unable to find a user,
-            user=User(first_name=first_name,last_name=last_name,email=email,is_active=False)
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'email already registered please use another email')
+        else:
+            user=User(username=email,first_name=first_name,last_name=last_name,email=email,is_active=True)
             user.save()
             user=User.objects.get(email=email)
             account_db=Account(user=user,phone_number=phone)
             account_db.save()
+            # setting session for the next page
+            request.session['first_name']=first_name
+            request.session['last_name']=last_name
+            request.session['email']=email
+            #   saving user as agent referall
+            agent=request.user
+            agent=AgentIdentity.objects.get(user=agent)
+            agent_affiliate_link=agent.link
+            agent_code=agent_affiliate_link[-6:]
+            user_agent = get_user_agent(request)
+            session=request.session
+            agent_add_user=AgentRegisteredUser(type="agent",agent_code=agent_code,session=session,user_agent=user_agent,user=user)
+            agent_add_user.save()
             return redirect('agent_generate_customer_quote')
-
-    form=SignUpForm()
+  
     return render(request,'agent/client/add.html',{'form':form,})
-
 
 def agent_quote_Lead_create(request):
     if request.method == 'POST':
@@ -69,17 +93,44 @@ def agent_quote_Lead_create(request):
         db.tax=tax(db.premium)
         db.total=total(db.premium,db.tax)
         #generating order number
-        db.order_number =id_generator()
+        order_number=id_generator()
+        db.order_number =order_number
         db.save()
         #saving value on sessions
+        # sending_email("order",db.email.email,db.name)
         request.session['order_number']=db.order_number
-        return redirect("agent_make_order")
+        return redirect("agent_view_order")
+    if 'first_name' in request.session:
+        # picking session for the previous page
+        first_name=request.session['first_name']
+        last_name=request.session['last_name']
+        email=request.session['email']
+        phone=request.session['phone']
+
+    else:
+        return redirect('agent_generate_customer_quote')
+
     form=QuoteForm()    
+    names=first_name+last_name
+    form.fields['name'].initial =names
+    form.fields['email'].initial =email
+    form.fields['phone'].initial =phone
+
     return render(request,'agent/client/generate_quote.html',{'form':form})
+
+def agent_view_order(request):
+    if 'order_number' in request.session:
+            order_number= request.session['order_number']
+    else:
+        return redirect('agent_generate_customer_quote')
+    data=QuoteLeads.objects.filter(order_number=order_number)   
+
+    return render(request,'agent/client/view_order.html',{"data":data})
 
 def agent_make_order(request):
     if request.method == "POST":
-        phone = request.POST["phone"]
+        phone=request.session['phone']
+        email=request.session['email']
         lead_order_number = request.POST["order_number"]
         user_data=QuoteLeads.objects.get(order_number=lead_order_number)
         amount=user_data.total
@@ -87,31 +138,31 @@ def agent_make_order(request):
         national_code="07"
         phone_number=str((national_code+number))
         billed_amount=int(amount)
-        mpesacall=MpesaCalls(ip_address=phone_number,content=billed_amount,conversation_id=1)
-        mpesacall.save()
         # making and order
         order_number=id_generator()
-        current_user = request.user
+        customer = User.objects.get(email=email)
         lead=QuoteLeads.objects.get(order_number=lead_order_number)
-        
             # saving order
         order=Order(
                 order_number=order_number,
                 phone_number=phone_number,
-                owner= current_user,
+                owner= customer,
                 lead=lead,
                 tax=lead.tax,
                 premium=lead.premium,
                 total=lead.total,
         )
         order.save()
-        try: 
-            # stkpush(request,phone_number,billed_amount)
-            return redirect('agent_user_kyc')
-        except Exception as error:
-            user_agent=request.META['HTTP_USER_AGENT']
-            messages.error(request,"There was a problem in initiating your transaction .Our engineers are currently fixing it.Sorry for the inconvenience",extra_tags='danger',)
-            return redirect('/')     #also sho waiting modal       
+        # associating order with agent
+        saved_order=Order.objects.get(order_number=order_number)
+        current_user=request.user
+        # agent_order=AgentAddedUserOrder(agent=current_user,order=saved_order)
+        # agent_order.save()
+        agent=request.user
+        # sending emails
+        agent_order_agent_notification_email(agent.email,agent.first_name,order_number,customer.first_name) 
+        agent_order_customer_notification_email(email,customer.first_name,order_number,agent.first_name)
 
-    return render(request,'agent/client/make_order.html',)
+
+    return redirect('agent_referred_users')
     

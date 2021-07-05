@@ -3,8 +3,8 @@ from django.http import HttpResponseRedirect
 from .forms import QuoteForm
 
 from .models import QuoteLeads
-from policies.models import PremiumRate
-from policies.models import TaxRate
+from configuration.models import PremiumRate
+from configuration.models import TaxRate
 
 import string
 import random
@@ -14,15 +14,15 @@ def id_generator(size=9, chars=string.ascii_uppercase + string.digits):
 
 def sumassured(school_fees,number_of_years):
     sumassured=school_fees*number_of_years
-    print(sumassured)
     return sumassured
 
 def premium(sum_assured):
+    # sum assured*premium rate/100[1+Premium policy holder levy]
     rate=PremiumRate.objects.get(id='1')
     premium_rate=rate.rate
-    premium=premium_rate*sum_assured
-    premium=premium/100
-    print(premium)
+    per_one_thousands=sum_assured/1000
+    new_rate=premium_rate/100
+    premium=new_rate*sum_assured
     return premium
 
 def tax(premium):
@@ -40,7 +40,7 @@ def leads(request):
         form = QuoteForm(request.POST)
         db =QuoteLeads()
 
-        db.name = request.POST['name']
+        db.name = request.POST['names_as_they_appear_on_ID']
         db.email = request.POST['email']
         db.phone = request.POST['phone']
         db.dob = request.POST['dob']

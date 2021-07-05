@@ -1,7 +1,14 @@
 {% extends 'base.html'%}
-{% block title%}
-Contact-ElimuSmart
-{% endblock %}
+{% block title%}Contact{% endblock %}
+{% load baseinformation_tags%}
+{% page_description as description %}
+
+{% block description%}
+{% for desc in description%}
+{{desc.contact}}
+{% endfor%}
+{% endblock%}
+
 {% block main%}
 {% for info in information%}
     <!-- Start Subheader -->

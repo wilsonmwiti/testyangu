@@ -1,0 +1,155 @@
+{% load static %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'communication/kyc/style.css'%}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    </head>
+    <body>
+        <img src="{% static 'communication/kyc/britam_logo.png'%}" alt="Britam">
+    <header>
+        <h1>ElimuSmart - Secure Your Child's Education</h1>
+    </header>
+     <main> 
+        <div class="row">
+            <h1>Personal Information</h1>
+            <div class="col-7 align-start">
+                <p>Applicants Three Name: <strong>{{kyc.names}}</strong></p>
+                <p>National ID/Passport No: <strong>{{kyc.id_national}}</strong></p>
+                <p>Date of Birth: <strong>{{kyc.dob}}</strong></p>
+                <p>Marital Status: <strong>{{kyc.marital_status}}</strong></p>
+                <p>Occupation: <strong>{{kyc.occupation}}</strong></p>
+                <p>Email Address: <strong>{{kyc.email}}</strong></p>
+            </div>
+            <div class="col-5 align-end">
+                <p>Nationality: <strong>{{kyc.nationality}}</strong><p/>
+                <p>Gender: <strong>{{kyc.gender}}</strong><p/>
+                <p>KRA Pin Number: <strong>{{kyc.kra_pin}}</strong><p/>
+                <p>Mobile Number: <strong>{{kyc.phone}}</strong><p/>
+                <p>Postal Address <strong>{{kyc.postal_code}}</strong><p/>
+            </div>
+            <div class="row">
+                <h2>Benefits Summary</h2>
+                <div class="col-7 align-start">
+                    <p>Name of school: <strong>{{kyc.name_of_school}}</strong></p>
+                    <p>County: <strong>{{kyc.school_county}}</strong></p>
+                    <p> School Type: <strong>{{kyc.school_type}}</strong></p>
+                    <p>School Level: <strong>{{kyc.school_level}}</strong></p>
+                </div>
+                <div class="col-5 align-end">
+                    <p>Annual School Fees: <strong>{{kyc.annual_fees}}</strong></p>
+                    <p>Years of Schooling Covered: <strong>{{kyc.years_of_schooling_covered}}</strong></p>
+                    <p>School Fees Insured:<strong>{{kyc.annual_fees}}</strong></p>
+                    <p><i>&nbsp;Annual Fees*Years of Schooling Covered</i></p>
+                </div><br>
+                <p><b>Premiums on the policy are payable every year</b></p>
+                <p><b>Cover terminates once the claim is made.</b></p>
+            </div>
+        </div>
+        <div class="data">
+              <h1>Declaration of Good Health</h1>
+                <p><div class="checkbox checked"></div>&nbsp; I declare that I am of good health and have not been diagnosed with any 
+                chronic or critical illness, nor do I intend to undergo any medical procedure or surgery, nor any medical test or investigation
+                on the recommendation of a doctor.</p> 
+                <p><div class="checkbox checked"></div>I  have never had any application for life, accident, 
+                health or critical illness insurance on my life declined, postponed or accepted other than on normal terms</p>
+        </div>      
+        <div class=" row ">
+        <!-- this should loop-->
+            <h1>Beneficiary </h1>
+            {% for child in beneficiaries%}
+            <h3>Child {{ forloop.counter }} </h3>
+            <p>Name: <strong>{{child.beneficiary_names}} &nbsp; </strong>Date of Birth: <strong>{{child.beneficiary_dob}}&nbsp;</strong>Allocation: <strong>{{child.beneficiary_allocation}} &nbsp;</strong></p>
+            {% endfor%}
+        </div>
+        <div class="row">
+            <h1>Nominee</h1>
+                <div class="col-5 align-start">
+                    <p>Name: <strong>{{kyc.nominee_names}}</strong></p>
+                    </p>Date of Birth: <strong>{{kyc.nominee_dob}}</strong></p>
+                </div>
+                <div class="col-7 align-end">
+                    </p>Relationship: <strong>{{kyc.nominee_relationship}}</strong></p>
+                    </p>Phone Number: <strong>{{kyc.phone}}</strong></p>
+                </div>
+        </div>
+        <div class="data">
+            <h1>US Citizen/Resident</h1>
+            {% if kyc.us_citizen == True %}
+            <p><div class="checkbox checked"></div></p>
+            {% else %}
+            <p><div class="checkbox"></div></p>
+            {% endif%}
+            (US citizens/residents include;persons born in US,or holder of green card,or has US residential address,or US telephone number,or US
+            correspondence,or C/O or hold mail address in US,or standing order to US bank or account granted power of attorney or signatory authority to person with US address) IF yes,complete the section below.</p>
+            {% if kyc.us_citizen == True %}
+            <p><b>Name: <strong>{{kyc.names}}</strong></b> <b>Date of Birth: <strong>{{kyc.dob}}</strong> </b>ID/Birth Cert No: <strong>{{kyc.us_id}}</strong></b><b>Sex: <strong>{{kyc.gender}}</strong></b></p>
+           {%else %}
+            <p><b>Name:___________ &nbsp;Date of Birth:_____ &nbsp;ID/Birth Cert No:______ &nbsp; Sex:__</p>
+            {%endif %}
+        </div>
+        <div class="row">
+            <h1>Political Details</h1>
+            <div class="col-7 align-start">
+               <p>Do you hold/have ever held a political office or ranking public office ?</p>
+               <p>Do your close relatives/busines partner(s)hold/ have ever held a political office or high ranking public office</p>
+            </div>
+            <div class="col-5 align-end political-info">
+               {% if kyc.public_office == True %}
+               <p>NO:<span class="checkbox "></span>&nbsp;Yes:<span class="checkbox checked"></span></p>
+               {% else%}
+               <p>NO:<span class="checkbox checked "></span>&nbsp;Yes:<span class="checkbox"></span></p>
+               {%endif%}
+                <br>
+               {% if kyc.relative_public_office == True %}
+               <p>NO:<span class="checkbox  "></span>&nbsp;Yes:<span class="checkbox checked"></span></p>
+               {%else%}
+               <p>No<span class="checkbox checked"></span>&nbsp;YES:<span class="checkbox"></span></p>
+               {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <h1>Financial Questions</h1>
+            <p>Source of Premium:<strong>{{kyc.source_of_income}}</strong> </p> 
+        </div>
+        <div class="data">
+            <h1>Declaration and Authorizations</h1>
+            <p>I,&nbsp;<strong>Godii Ndung</strong>, the policy owner declare and agree that;</p>
+            <p>1.  Application is hereby made to Britam Life Assurance Co. (K) Ltd. According to the Company’s terms and conditions.</p>
+            <p>2.  The answers in this application are complete and true.</p>
+            <p>3.  The statements made in this application and in any other documentation submitted in connection with this application form the basis of the policy applied
+            for and shall constitute all representation made as a basis for the policy. I have checked those statements carefully and if there are any changes to the information in this form before the policy starts, I will tell Britam Life Assurance Co. (K) Ltd.</p>
+            <p>4.  No agent has the authority to waive a question in the application, modify the application or bind the Company by making any promise or representation or by giving or by receiving any information.</p>
+            <p>5.  I do not have any health problems on treatment or medication of any kind.</p>
+            <p>6.  I irrevocably authorize and request my Doctor or other person who maybe in possession of or hereafter acquire any information concerning my health (where such information relates to the past or the future) to disclose such information to Britam Life Assurance Co. (K) Ltd. I agree that this authority and request shall remain in force after my death as well as prior thereto.</p>
+            <p>7.  The Company may recover any expenses incurred if I terminate the application for insurance before the contract is completed.</p>
+            <p>8.  The Company shall not be liable for having received and acted in good faith upon any and/or all instructions received through electronic communication purporting to come from me but which is subsequently discovered to, or may, emanate from unauthorized individuals or in any other circumstances whatsoever and, I shall keep the Company indemnified at all times against all actions,proceedings, claims, loss, damage, costs, and expenses which may be brought against or incurred by the Company by reason of the Company accepting such instructions.</p>
+            <p>9. I understand that information regarding my insurability will be treated as confidential. The company or its reinsurers may however release information in its file to other Insurance Companies to whom I may apply for insurance cover, or to whom a claim for benefits may be submitted.</p>
+        </div>
+        <br>
+        <div class="data">
+            <p><b>Data Collection Consent </b>Pursuant to the Data Protection Act, 2019 (“DPA”) and the European Union General Data Protection Regulation 
+            (“EU GDPR”), Britam Life Assurance Company (K) Limited (“Britam”), in its capacity as a data controller and/or
+            processor under the DPA and EU GDPR, must obtain your explicit, affirmative, and informed consent before it can 
+            collect or process any personal data for a lawful basis. Britam shall only use your personal data to administer
+            applied products and services requested from Britam. In order to provide you with the above services, Britam will
+            need to collect, process and store your personal data for the duration of the product. If you consent to us storing
+            your personal data for this purpose please tick the checkbox below.</p>
+        </div>    
+        <div>    
+            <p><div class="checkbox checked"></div>&nbsp;I agree to Britam collecting, processing and storing my personal 
+            data.</p>
+        </div>
+        <p><b><div class="checkbox checked"></div>&nbsp;By appending my full name here, I hereby accept that all information is true and will form part of the contract</b>.</p>
+        <div class="row">
+            <div class="col-7 align-start">
+                <p>Applicant Name: <strong>{{kyc.names}}</strong></p>
+                <p>National ID Number: <strong>{{kyc.id_national}}</strong></p>
+            </div>
+            <div class="col-5 align-end">
+                <p>Date: <strong>{{kyc.time}}</p>
+            </div>
+        </div>
+     </main>
+    </body>
+</html>

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django_user_agents.utils import get_user_agent
 
 from website.cms.models import HomeCarouselOne
 from website.cms.models import HomeCarouselTwo
@@ -17,10 +18,22 @@ from website.blog.models import Post
 from website.cms.models import ContactUsData
 
 from leads.models import ContactUs
+from agent.models import AgentLeads
 
 from .form import ContactUsForm
 
 def index(request):
+    agent_referall=request.GET.get('q')
+    if agent_referall==None:
+        pass
+    else:
+        user_agent = get_user_agent(request)
+        session=request.session
+        lead_tracking=AgentLeads(agent_code=agent_referall,session=session,user_agent=user_agent)
+        lead_tracking.save()
+        session_expiration_time=60*60*24*60
+        request.session.set_expiry(session_expiration_time)
+        request.session['agent_referall']=agent_referall
     carouselOne=HomeCarouselOne.objects.all()
     carouselTwo=HomeCarouselTwo.objects.all()
     about=HomeAbout.objects.all()

@@ -1,7 +1,10 @@
 from django.db import models
 # from ckeditor.fields import models.TextField
 from django.db.models.fields.files import ImageField
-
+THIRD_PARTY_LINK_POSITION=[
+    ("Head","Head"),
+    ("Body","Body")
+]
 # -----------------------BASE------------------------------------------
 class Base(models.Model):
     logo=models.ImageField(upload_to="website/base",verbose_name="Logo image cropped and without background")
@@ -16,6 +19,25 @@ class Base(models.Model):
 
     class Meta:
         db_table=u"Elimusmart links and resources"
+
+class PageDescription(models.Model):
+    home=models.TextField(blank=True)
+    about=models.TextField(blank=True)
+    contact=models.TextField(blank=True)
+    login=models.TextField(blank=True)
+    signup=models.TextField(blank=True)
+    class Meta:
+        db_table=u"Pages Description SEO"
+
+
+class ThirdPartyTags(models.Model):
+    time=models.DateTimeField(auto_now_add=True)
+    name=models.CharField(max_length=50)
+    location=models.CharField(choices=THIRD_PARTY_LINK_POSITION,max_length=50)
+    link=models.TextField(blank=True)
+    class Meta:
+        db_table=u"Third party tags"   
+          
 # ---------------------HOME---------------------------------------------
 class HomeCarouselOne(models.Model):
     main_heading=models.CharField(max_length=50,blank=True,verbose_name="Main heading")

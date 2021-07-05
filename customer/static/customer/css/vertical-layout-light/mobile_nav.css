@@ -1,0 +1,76 @@
+
+.fab {
+  z-index: 100;
+  cursor: pointer;
+  color: #ffffff;
+  position: fixed;
+  bottom:5rem;
+  right: 2rem;
+}
+.fab > .fab-trigger {
+  position: relative;
+  z-index: 101;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:rgb(43,88,153);
+  height: 44px;
+  width: 44px;
+  transform: translate(0);
+  box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.25);
+}
+.fab > .fab-trigger > .fab-icon {
+  transition: all 0.3s;
+  transform: rotate(45deg);
+  height: 32px;
+  width: 32px;
+}
+.fab > .fab-items {
+  user-select: none;
+  z-index: 101;
+  position: absolute;
+  bottom: 64px;
+  right:150%;
+  display: flex;
+  flex-direction: column-reverse;
+  opacity: 0;
+  transition-property: transform, opacity;
+  transition-duration: 0.3s, 0.3s;
+  transition-timing-function: ease-out;
+}
+.fab > .fab-items a{
+    color:wheat;
+    margin-bottom: 15%;
+    width:500%;
+}
+.fab.open > .fab-trigger {
+  background-color: #ea8989;
+  color:rgb(255, 255, 255);
+}
+.fab.open > .fab-trigger > .fab-icon {
+  transform: rotate(0);
+}
+.fab.open > .fab-items {
+  opacity: 1;
+  transform: translatey(0);
+}
+.fab > .fab-backdrop {
+  z-index: 1;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vh;
+  background:rgb(43,88,153);
+  opacity: 0;
+  border-top-left-radius: 9999px;
+  transform: scale(0);
+  transform-origin: bottom right;
+  transition: all 0.3s ease-out;
+  box-shadow: 0 0 0 32px hsla(0, 100%, 50%, 0.941), 0 0 0 64px #ffccccf0;
+}
+.fab.open > .fab-backdrop {
+  opacity: 0.75;
+  transform: scale(1);
+}
